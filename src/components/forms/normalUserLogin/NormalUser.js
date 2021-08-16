@@ -1,0 +1,148 @@
+import React, { Component } from 'react'
+import axios from 'axios'
+import { First } from 'react-bootstrap/esm/PageItem'
+export default class NormalUser extends Component {
+    constructor(props){
+        super(props);
+        this.usernameRef=React.createRef();
+        this.passRef=React.createRef();
+        this.passError=React.createRef();
+
+        this.state={
+            id:'',
+            username:'',
+            password:'',
+            users:[],
+            isAuthenticated:false
+        }
+    }
+
+    handleUsername(e){
+        e.target.classList.remove('is-invalid');
+        e.target.classList.add('is-valid');
+    }
+
+    handlePassword(e){
+        e.target.classList.remove('is-invalid');
+    }
+    componentDidMount(){
+        this.usernameRef.current.addEventListener("keydown",this.handleUsername);
+        this.passRef.current.addEventListener("keydown",this.handlePassword);
+        
+    }
+
+    onChangeHandler=(e)=>{
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
+    handleFormSubmit=()=>{
+        const pass= this.state.password;
+        //validate Input
+        if(this.state.username===''){
+            this.usernameRef.current.classList.add('is-invalid');
+        }
+
+        //Password Validation
+        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+        var minNumberofChars = 6;
+        var maxNumberofChars = 16;
+
+        if(pass.length < minNumberofChars || pass.length > maxNumberofChars){
+           this.passRef.current.classList.add('is-invalid');
+           this.passError.current.innerText = "Password Length must be greater than 3 and less than 16";
+        }
+        if(!regularExpression.test(pass)) {
+            this.passRef.current.classList.add('is-invalid');
+            this.passError.current.innerText = "Password should contain atleast one number and one special character";
+        }
+
+
+
+        //check user in database
+        axios.get('http://localhost:3000/users')
+        .then(response=>this.setState({
+            users: response.data
+        }));
+
+        this.state.users.forEach((x)=>{
+            console.log(x);
+            if(x.user === this.state.username && x.password===this.state.password){
+                this.setState({
+                    isAuthenticated:true
+                })
+            }
+        })
+
+        if(this.state.isAuthenticated){
+            alert('Logged in Successfully');
+        }
+        else {
+            alert('User not registered');
+        }
+
+    }
+
+    render() {
+        return (
+            <div>
+                <h4 className="loginTitle mb-4">Login to Your Account</h4>
+               <form>
+                    <div className="mb-3 form">
+                        <label htmlFor="username" className="form-label form__label">USERNAME</label>
+                        <input
+                            type="name" 
+                            className="form-control form__field " 
+                            placeholder="Enter username"
+                            id="username" 
+                            value={this.state.username}
+                            onChange={this.onChangeHandler}
+                            name="username"
+                            ref={this.usernameRef}
+                        />
+                        
+                        <div className="invalid-feedback ms-5">
+                            Username field can't be empty!
+                        </div>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="userPassword" className="form-label form__label">PASSWORD</label>
+                        <input 
+                            type="password"
+                            className="form-control form__field"
+                            id="userPassword"
+                            placeholder="Enter Password"
+                            value={this.state.password}
+                            onChange={this.onChangeHandler}
+                            name="password"
+                            ref={this.passRef}
+                        />
+                        <div className="invalid-feedback ms-5" ref={this.passError}>
+                            Password should contain atleast one number and one special character
+                        </div>
+                    </div>
+
+                    <div className="d-grid gap-2 loginBtn">
+                        <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#66FCF1' , color:'white' }}
+                        onClick={this.handleFormSubmit}
+                        >
+                                Login
+                        </button>
+                    </div>
+                    <div className="form-text mt-0 ms-5 ">
+                        <a className="signUpLink" href="#">New user? Sign up here</a>
+                        <a className="signUpLink float-end me-5" href="#">Forgot Password?</a>
+                    </div>
+                </form>
+                <p className="text-center">OR</p> 
+                <h5 className="loginTitle">Login with Social Media</h5>
+                <div className="socialIcons">
+                    <i className="fab fa-google fa-2x me-2"></i>
+                    <i className="fab fa-twitter fa-2x mx-2"></i>
+                    <i className="fab fa-facebook fa-2x mx-2"></i>
+                </div>
+            </div>
+        )
+    }
+}

@@ -1,34 +1,16 @@
 {
-    "posts": [
+    "users": [
       {
-        "title": "Anmol",
-        "body": "Yo baby!",
-        "id": 1
-      },
+        "id":1,
+        "user":"anmolahuja",
+        "password":"Anmol1234"
+      }
+    ],
+    "ngos":[
       {
-        "id": 2,
-        "title": "post 2",
-        "body": "This is post 2"
-      },
-      {
-        "id": 3,
-        "title": "post 3",
-        "body": "This is post 3"
-      },
-      {
-        "title": "Hey I am Anmol",
-        "body": "I am a programmer! well kinda\n",
-        "id": 4
-      },
-      {
-        "title": "Anish",
-        "body": "I am noob in pubg with a KD of less than 0.90",
-        "id": 5
-      },
-      {
-        "title": "shehreen",
-        "body": "hey everyone",
-        "id": 6
+        "id":1,
+        "user":"12345",
+        "password":"1234"
       }
     ]
   }
