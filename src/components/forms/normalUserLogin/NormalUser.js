@@ -43,7 +43,7 @@ export default class NormalUser extends Component {
         if(this.state.username===''){
             this.usernameRef.current.classList.add('is-invalid');
         }
-
+        if(this.state.username.length<3 || this.state.user)
         //Password Validation
         var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
         var minNumberofChars = 6;

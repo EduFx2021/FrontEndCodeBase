@@ -4,7 +4,7 @@ import logo from '../../images/logo.png'
 import NormalUser from './normalUserLogin/NormalUser'
 import NGO from './ngoLogin/NGO'
 import ReactDOM from 'react-dom'
-import './form.css'
+import '../../css/form.css'
 export default class Login extends Component {
     constructor(props){
         super(props);

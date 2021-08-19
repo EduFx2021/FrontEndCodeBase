@@ -9,7 +9,6 @@
 .loginTitle {
   font-size: 25px;
   margin-left: 45px;
-  
 }
 .dropdownBtn{
   width: 80%;
@@ -57,3 +56,46 @@
 .signUpLink:hover {
   color: #66FCF1;
 }
+
+/* SIGNUP form CSS */
+.signup {
+  background-color: #1F2833; 
+  height: 100vh; 
+}
+
+.card:hover {
+  background-color: #D3D3D3;
+  cursor: pointer;
+ 
+}
+
+.normalusersignup {
+  background-image: url('../images/Environment.svg');
+  background-color:#1F2833;
+  background-repeat: no-repeat;
+  background-size:40%;
+  background-position-y: 100px;
+}
+
+.normalusersignup .form-label {
+  color: white !important;
+  margin-top: 10px;
+}
+.normalusersignup .form__field {
+  margin-left: 0px;
+}
+
+.normalusersignup .loginBtn {
+  width: 80%;
+  margin-left: 25px;
+}
+
+.ngosignup {
+  background-image: url('../images/Ngo.svg');
+  background-color:#1F2833;
+  background-repeat: no-repeat;
+  background-size:50%;
+  background-position-x: -83px;
+  background-position-y: 40px;
+}
+

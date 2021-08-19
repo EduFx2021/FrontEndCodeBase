@@ -4,7 +4,7 @@ import logo from '../../images/logo.png'
 export default class Header extends Component {
 
     showModal = this.props.showModal;
-
+    showSignUpPage= this.props.showSignUp;
     render() {
         return (
            <div>
@@ -15,7 +15,7 @@ export default class Header extends Component {
                     </a>
                     <div className="d-flex flex-row-reversed">
                         <a className="nav-item nav-link " href="#" onClick={this.showModal} data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                        <a className="nav-item nav-link" href="#">Sign up</a>
+                        <a className="nav-item nav-link" href="/signup" onClick={this.showSignUpPage}>Sign up</a>
                     </div>
                     
                 </nav>

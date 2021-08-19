@@ -3,14 +3,14 @@
       {
         "id":1,
         "user":"anmolahuja",
-        "password":"Anmol1234"
+        "password":"Anmol@1234"
       }
     ],
     "ngos":[
       {
         "id":1,
         "user":"12345",
-        "password":"1234"
+        "password":"Anmol@1234"
       }
     ]
   }
