@@ -6,6 +6,7 @@ export default class NormalUser extends Component {
         this.usernameRef=React.createRef();
         this.passRef=React.createRef();
         this.passError=React.createRef();
+        this.usernameError= React.createRef();
 
         this.state={
             id:'',
@@ -41,6 +42,11 @@ export default class NormalUser extends Component {
         //validate Input
         if(this.state.username===''){
             this.usernameRef.current.classList.add('is-invalid');
+            this.usernameError.current.innerText="Username field can't be empty!";
+        }
+        else if(this.state.username.length<3 || this.state.user.length>15){
+            this.usernameRef.current.classList.add('is-invalid');
+            this.usernameError.current.innerText="Username Length must be greater than 3 and less than 15";
         }
 
         //Password Validation
@@ -93,7 +99,7 @@ export default class NormalUser extends Component {
                         <input
                             type="name" 
                             className="form-control form__field " 
-                            placeholder="Enter username"
+                            placeholder="Enter NGO Identification number"
                             id="username" 
                             value={this.state.username}
                             onChange={this.onChangeHandler}
@@ -101,8 +107,8 @@ export default class NormalUser extends Component {
                             ref={this.usernameRef}
                         />
                         
-                        <div className="invalid-feedback ms-5">
-                            NGO Id field can't be empty!
+                        <div className="invalid-feedback ms-5" ref={this.usernameError}>
+                           
                         </div>
                     </div>
                     <div className="mb-3">
@@ -118,7 +124,7 @@ export default class NormalUser extends Component {
                             ref={this.passRef}
                         />
                         <div className="invalid-feedback ms-5" ref={this.passError}>
-                            Password should contain atleast one number and one special character
+                            
                         </div>
                     </div>
 

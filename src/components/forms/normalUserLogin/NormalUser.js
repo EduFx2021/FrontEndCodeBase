@@ -7,6 +7,7 @@ export default class NormalUser extends Component {
         this.usernameRef=React.createRef();
         this.passRef=React.createRef();
         this.passError=React.createRef();
+        this.usernameError= React.createRef();
 
         this.state={
             id:'',
@@ -42,8 +43,12 @@ export default class NormalUser extends Component {
         //validate Input
         if(this.state.username===''){
             this.usernameRef.current.classList.add('is-invalid');
+            this.usernameError.current.innerText="Username field can't be empty!";
         }
-        if(this.state.username.length<3 || this.state.user)
+        else if(this.state.username.length<3 || this.state.user.length>15){
+            this.usernameRef.current.classList.add('is-invalid');
+            this.usernameError.current.innerText="Username Length must be greater than 3 and less than 15";
+        }
         //Password Validation
         var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
         var minNumberofChars = 6;
@@ -53,7 +58,7 @@ export default class NormalUser extends Component {
            this.passRef.current.classList.add('is-invalid');
            this.passError.current.innerText = "Password Length must be greater than 3 and less than 16";
         }
-        if(!regularExpression.test(pass)) {
+        else if(!regularExpression.test(pass)) {
             this.passRef.current.classList.add('is-invalid');
             this.passError.current.innerText = "Password should contain atleast one number and one special character";
         }
@@ -102,8 +107,8 @@ export default class NormalUser extends Component {
                             ref={this.usernameRef}
                         />
                         
-                        <div className="invalid-feedback ms-5">
-                            Username field can't be empty!
+                        <div className="invalid-feedback ms-5" ref={this.usernameError}>
+                            
                         </div>
                     </div>
                     <div className="mb-3">
@@ -119,7 +124,7 @@ export default class NormalUser extends Component {
                             ref={this.passRef}
                         />
                         <div className="invalid-feedback ms-5" ref={this.passError}>
-                            Password should contain atleast one number and one special character
+                            
                         </div>
                     </div>
 
