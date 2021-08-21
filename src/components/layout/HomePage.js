@@ -1,5 +1,4 @@
 import React from 'react'
-import home from '../../images/bg.png'
 
 export default function HomePage() {
     return (

@@ -12,15 +12,15 @@ export default class SignUp extends Component {
         return (
             <div className="signup" style={{height:"100vh"}}>
                 <div className="container p-4">
-                    <h2 className="text-center " style={{color:"white"}}>Eco-Action Create an Account</h2>
-                    <h4 className="text-center mt-4" style={{color:"white"}}>Choose which type of User You are:</h4>
+                    <h2 className="text-center display-3" style={{color:"white"}}>Eco-Action Create an Account</h2>
+                    <h4 className="text-center mt-4 display-6" style={{color:"white"}}>Choose which type of User You are:</h4>
                     <div className="row">
                         <div className="col-5">
                             <div className="card mt-5 float-end" style={{width: "18rem", height:"22rem"}}>
                                 <img src={normalSignUp} className="card-img-top" alt="..."/>
                                     <div class="card-body">
-                                        <h5 className="card-title">Normal User</h5>
-                                        <p className="card-text">If You are a normal user then please click on this to Sign up to Eco Action and Keep track of your registered Problem</p>
+                                        <h5 className="card-title">Regular User</h5>
+                                        <p className="card-text">If You are a Regular user then please click on this to Sign up to Eco Action and Keep track of your registered Problem</p>
                                         
                                     </div>
                             </div>
@@ -32,7 +32,7 @@ export default class SignUp extends Component {
                             <div className="card mt-5" style={{width: "18rem", height:"22rem"}}>
                                 <img src={ngoSignUp} className="card-img-top" alt="..."/>
                                     <div class="card-body">
-                                        <h5 className="card-title">NGO</h5>
+                                        <h5 className="card-title mt-3">NGO [Non-Governmental Organization]</h5>
                                         <p className="card-text">NGO's can click here to register to Sign up to Eco-Action </p>
                                         
                                     </div>

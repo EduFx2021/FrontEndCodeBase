@@ -48,21 +48,21 @@ export default class Login extends Component {
         return (
             <>
                 <Modal show={this.props.toggleModal} onHide={this.handleClose}>
-                    <Modal.Header style={{backgroundColor:'#1F2833' ,color:'white'}}>
+                    <Modal.Header style={{backgroundColor:'white' ,color:'black'}}>
                         <img src={logo} alt="" width="40" height="40"/>
-                        <Modal.Title>Eco-Action </Modal.Title>
-                        <button type="button" className="btn mt-2 fw-bold btn-sm closeBtn" style={{backgroundColor:'#1F2833' , color:'white' }}
+                        <Modal.Title >Eco-Action </Modal.Title>
+                        <button type="button" className="btn mt-2 fw-bold btn-sm closeBtn" style={{backgroundColor:'white' , color:'black' }}
                         onClick={this.handleClose}
                         >
                             X
                         </button>
                     </Modal.Header>
-                    <Modal.Body style={{backgroundColor:'#1F2833',color:'white'}}>
+                    <Modal.Body style={{backgroundColor:'white' ,color:'black'}}>
                         <div className={this.state.showForm?"d-none":""}>
                             <p className="ms-5 mt-2">Select the User-Type from Below</p>
                         
                             <div className="dropdown dropdownBtn d-grid gap-2 mt-1">
-                                <a className="btn btn-secondary btn-sm dropdown-toggle ms-5 mb-0" href="#" role="button" id="dropdownMenuLink" onClick={this.expandDropdown}>
+                                <a className="btn btn-secondary btn-sm dropdown-toggle ms-5 mb-0" href="#" role="button" id="dropdownMenuLink" onClick={this.expandDropdown} style={{backgroundColor:'#00adef',color:'white'}}>
                                     Select User
                                 </a>
                                 <ul className={this.state.expandDropdown?"dropdown-menu dropdown-menu-dark dropdown-menu-end d-block mt-4 ms-5":"dropdown-menu dropdown-menu-dark ms-5"} >

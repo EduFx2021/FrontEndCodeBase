@@ -1,16 +1,29 @@
 {
-    "users": [
-      {
-        "id":1,
-        "user":"anmolahuja",
-        "password":"Anmol@1234"
-      }
-    ],
-    "ngos":[
-      {
-        "id":1,
-        "user":"12345",
-        "password":"Anmol@1234"
-      }
-    ]
-  }
+  "users": [
+    {
+      "id": "e66b9f10-02bd-11ec-8d83-bd776df0602a",
+      "email": "anmolahuja359@gmail.com",
+      "user": "anmolahuja",
+      "password": "Anmol@1234"
+    },
+    {
+      "id": "35b375e0-02c1-11ec-a085-f9de7e5c17d2",
+      "email": "anmolahuja01@gmail.com",
+      "user": "anmolahuja01",
+      "password": "Yo@123"
+    },
+    {
+      "id": "941af0e0-02c1-11ec-adf5-c38c00bf38b6",
+      "email": "alice123@gmail.com",
+      "user": "alice123",
+      "password": "alice@123"
+    }
+  ],
+  "ngos": [
+    {
+      "id": 1,
+      "user": "12345",
+      "password": "Anmol@1234"
+    }
+  ]
+}

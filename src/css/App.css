@@ -8,14 +8,14 @@
 }
 .nav-item:hover {
     color: white!important;
-    background-color: #66FCF1;
+    background-color: #00adef;
     border-radius: 15px;
 }
 .App {
     background-image: url('../images/bg.png')
 }
 h1 {
-    color: #66FCF1;
+    color: #00adef;
     margin-top: 90px;
     font-family: 'Anton', sans-serif;
 }
@@ -28,5 +28,6 @@ h1 {
 }
 
 .closeBtn:hover{
-    background-color: #66FCF1 !important;
+    background-color: #00adef !important;
+    color: white !important;
 }

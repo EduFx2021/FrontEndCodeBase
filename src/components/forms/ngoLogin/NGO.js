@@ -129,14 +129,14 @@ export default class NormalUser extends Component {
                     </div>
 
                     <div className="d-grid gap-2 loginBtn">
-                        <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#66FCF1' , color:'white' }}
+                        <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}
                         onClick={this.handleFormSubmit}
                         >
                                 Login
                         </button>
                     </div>
                     <div className="form-text mt-0 ms-5 ">
-                        <a className="signUpLink" href="#">New user? Sign up here</a>
+                        No account?<a className="signUpLink" href="/signup"> <span style={{color:'blue'}}>Create one!</span></a>
                         <a className="signUpLink float-end me-5 mb-4" href="#">Forgot Password?</a>
                     </div>
                 </form>
