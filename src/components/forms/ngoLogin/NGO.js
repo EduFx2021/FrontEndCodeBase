@@ -44,7 +44,7 @@ export default class NormalUser extends Component {
             this.usernameRef.current.classList.add('is-invalid');
             this.usernameError.current.innerText="Username field can't be empty!";
         }
-        else if(this.state.username.length<3 || this.state.user.length>15){
+        else if(this.state.username.length<3 || this.state.username.length>15){
             this.usernameRef.current.classList.add('is-invalid');
             this.usernameError.current.innerText="Username Length must be greater than 3 and less than 15";
         }

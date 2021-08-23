@@ -40,6 +40,9 @@ export default class NormalUser extends Component {
 
     handleFormSubmit=()=>{
         const pass= this.state.password;
+        this.setState({
+            isCorrect:false
+        });
         //validate Input
         if(this.state.username===''){
             this.usernameRef.current.classList.add('is-invalid');

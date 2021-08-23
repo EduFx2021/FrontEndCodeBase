@@ -31,7 +31,6 @@ export default class NormalUserSignUp extends Component {
     }
     
     componentDidMount(){
-        this.props.hideNav();
         this.signUpButtonRef.current.disabled=true;
         this.usernameRef.current.addEventListener("keydown",this.handleInput);
         this.passRef.current.addEventListener("keydown",this.handleInput);

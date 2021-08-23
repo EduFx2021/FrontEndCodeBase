@@ -119,3 +119,10 @@
   background-position-y: 40px;
 }
 
+.ngosignup .form__field {
+  margin-left: 0px;
+}
+.ngosignup .loginBtn {
+  width: 80%;
+  margin-left: 25px;
+}

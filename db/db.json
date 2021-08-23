@@ -17,6 +17,12 @@
       "email": "alice123@gmail.com",
       "user": "alice123",
       "password": "alice@123"
+    },
+    {
+      "id": "d2981370-03f7-11ec-974e-6f276ba8ec6d",
+      "email": "spareacx@gmail.com",
+      "user": "spareacx",
+      "password": "Spare@123"
     }
   ],
   "ngos": [
@@ -24,6 +30,12 @@
       "id": 1,
       "user": "12345",
       "password": "Anmol@1234"
+    },
+    {
+      "id": "034d8ef0-03f8-11ec-9949-5f721bea1f3c",
+      "email": "ngo@helpindia.org",
+      "user": "54321",
+      "password": "Ngo@123"
     }
   ]
 }

@@ -11,8 +11,7 @@ import NGOSignUp from './components/forms/ngoSignUp/NGOSignUp';
 
 export default class App extends Component{
   state={
-    displayModal: false,
-    displaySignUp:false
+    displayModal: false
   }
 
   showModal=e=>{
@@ -21,24 +20,27 @@ export default class App extends Component{
     });
   }
 
-  showSignUp=e=>{
-    this.setState({
-      displaySignUp:!this.state.displaySignUp
-    });
-  }
+  
 
   render(){
     return (
       <Router>
         <div className="App">
-        {this.state.displaySignUp?null:<Header showModal={this.showModal} showSignUp={this.showSignUp}/>}
+
           <Login toggleModal={this.state.displayModal} showModal={this.showModal}/>
           {/* {this.state.displaySignUp?<SignUp/>:null} */}
           <Switch>
-            <Route exact path="/" component={HomePage}/>
-            <Route exact path="/signup" render={(props)=>(<SignUp {...props} hideNav={this.showSignUp}/>)}/>
-            <Route exact path="/signup/normaluser" render={(props)=>(<NormalUserSignUp {...props} hideNav={this.showSignUp}/>)}/>
-            <Route exact path="/signup/ngo" render={(props)=>(<NGOSignUp {...props} hideNav={this.showSignUp}/>)}/>
+            <Route exact path='/' render={() =>
+                <>
+                  <Header showModal={this.showModal} showSignUp={this.showSignUp} />
+                  <HomePage />
+                </>
+              }
+            />
+            
+            <Route exact path="/signup" component={SignUp}/>
+            <Route exact path="/signup/normaluser" component={NormalUserSignUp}/>
+            <Route exact path="/signup/ngo" component={NGOSignUp}/>
           </Switch>
         </div>
       </Router>
