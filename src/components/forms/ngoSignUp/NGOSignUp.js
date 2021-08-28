@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../../../css/form.css';
 import { v1 as uuidv1 } from 'uuid';
+import { Link } from "react-router-dom";
 
 export default class NGOSignUp extends Component {
     constructor(props){
@@ -16,10 +17,13 @@ export default class NGOSignUp extends Component {
         this.confirmPassError= React.createRef();
         this.signUpButtonRef= React.createRef();
         this.emailError= React.createRef();
+        this.ngoNameRef= React.createRef();
+        this.ngoNameError= React.createRef();
 
         this.state={
             email:'',
             ngoId:'',
+            ngoName:'',
             password:'',
             confirmpassword:''
         }
@@ -141,13 +145,13 @@ export default class NGOSignUp extends Component {
     }
     render() {
         return (
-            <div className="ngosignup" style={{height:"100vh"}}>
-                <div className="container">
+            <div className="ngosignup" id="ngoSignUp" style={{height:"100vh"}}>
+                <div className="container" style={{marginLeft:"0px"}}>
                     <div className="row">
                         <div className="col-6">
-
+                            <Link to="/" type="button" className="btn btn-outline-dark btn-sm mt-2">Home</Link>
                         </div>
-                        <div className="col-6 pt-4">
+                        <div className="col-6 pt-4" style={{marginLeft:"650px"}}>
                             <h3 className="mt-5 ms-4 mb-3 display-6 "style={{color:"#4d4d4d"}}>Non Governmental Organization [NGO] Sign Up</h3>
 
                             <form>
@@ -170,7 +174,7 @@ export default class NGOSignUp extends Component {
                                 <div className="mb-1 ms-4 mt-2">
                                     <label htmlFor="normalUsername" className="form-label">NGO Identification Number</label>
                                     <input 
-                                        type="email" 
+                                        type="text" 
                                         className="form-control form__field"
                                         id="normalUsername"
                                         value={this.state.ngoId}
@@ -183,6 +187,24 @@ export default class NGOSignUp extends Component {
                             
                                     </div>
                                 </div>
+
+                                {/* <div className="mb-1 ms-4 mt-2">
+                                    <label htmlFor="ngoName" className="form-label">NGO Name</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control form__field"
+                                        id="ngoName"
+                                        value={this.state.ngoName}
+                                        onChange={this.onChangeHandler}
+                                        name="ngoName"
+                                        ref={this.ngoNameRef}
+                                    />
+                                    
+                                    <div className="invalid-feedback " ref={this.ngoNameError}>
+                            
+                                    </div>
+                                </div> */}
+
                                 <div className="mb-2 ms-4">
                                     <label htmlFor="normalUserPassword " className="form-label">Password</label>
                                     <input 
@@ -221,6 +243,9 @@ export default class NGOSignUp extends Component {
                                         onChange={this.onChangeHandler}
                                     />
                                     <label className="form-check-label" htmlFor="exampleCheck1" style={{color:"black"}}>I Agree to <a href="https://www.termsandconditionsgenerator.com/live.php?token=QQ4YtMqswIGRlDHar7w03s7oAjjRXChF">terms and conditions</a></label>
+                                </div>
+                                <div className="form-text mt-0 ms-4 ">
+                                    Are you a Regular User ? <a className="signUpLink" href="#normalSignUp"> <span style={{color:'blue'}}>Sign Up here!</span></a>
                                 </div>
                                 <div className="d-grid gap-2 loginBtn">
                                     <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}

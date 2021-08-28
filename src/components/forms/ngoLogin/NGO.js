@@ -84,7 +84,7 @@ export default class NormalUser extends Component {
             alert('Logged in Successfully');
         }
         else {
-            alert('User not registered');
+            alert('User has entered wrong username and pass');
         }
 
     }
@@ -136,7 +136,7 @@ export default class NormalUser extends Component {
                         </button>
                     </div>
                     <div className="form-text mt-0 ms-5 ">
-                        No account?<a className="signUpLink" href="/signup"> <span style={{color:'blue'}}>Create one!</span></a>
+                        No account?<a className="signUpLink" href="/signup/ngo"> <span style={{color:'blue'}}>Sign Up!</span></a>
                         <a className="signUpLink float-end me-5 mb-4" href="#">Forgot Password?</a>
                     </div>
                 </form>

@@ -5,6 +5,7 @@ import NormalUser from './normalUserLogin/NormalUser'
 import NGO from './ngoLogin/NGO'
 import ReactDOM from 'react-dom'
 import '../../css/form.css'
+
 export default class Login extends Component {
     constructor(props){
         super(props);
@@ -50,7 +51,7 @@ export default class Login extends Component {
                 <Modal show={this.props.toggleModal} onHide={this.handleClose}>
                     <Modal.Header style={{backgroundColor:'white' ,color:'black'}}>
                         <img src={logo} alt="" width="40" height="40"/>
-                        <Modal.Title >Eco-Action </Modal.Title>
+                        <Modal.Title style={{color:"#4d4d4d"}}> Eco-Action </Modal.Title>
                         <button type="button" className="btn mt-2 fw-bold btn-sm closeBtn" style={{backgroundColor:'white' , color:'black' }}
                         onClick={this.handleClose}
                         >
@@ -61,12 +62,12 @@ export default class Login extends Component {
                         <div className={this.state.showForm?"d-none":""}>
                             <p className="ms-5 mt-2">Select the User-Type from Below</p>
                         
-                            <div className="dropdown dropdownBtn d-grid gap-2 mt-1">
-                                <a className="btn btn-secondary btn-sm dropdown-toggle ms-5 mb-0" href="#" role="button" id="dropdownMenuLink" onClick={this.expandDropdown} style={{backgroundColor:'#00adef',color:'white'}}>
+                            <div className="dropdown dropdownBtn mt-1">
+                                <a className="btn btn-secondary  dropdown-toggle ms-5 mb-0" href="#" role="button" id="dropdownMenuLink" onClick={this.expandDropdown} style={{backgroundColor:'#00adef',color:'white'}}>
                                     Select User
                                 </a>
-                                <ul className={this.state.expandDropdown?"dropdown-menu dropdown-menu-dark dropdown-menu-end d-block mt-4 ms-5":"dropdown-menu dropdown-menu-dark ms-5"} >
-                                    <li><a className="dropdown-item" href="#" onClick={this.handleUserType.bind(this,'Normal')}>Normal User</a></li>
+                                <ul className={this.state.expandDropdown?"dropdown-menu dropdown-menu-light dropdown-menu-end d-block mt-1 ms-5":"dropdown-menu dropdown-menu-light ms-5"} >
+                                    <li><a className="dropdown-item" href="#" onClick={this.handleUserType.bind(this,'Normal')}>Individual User</a></li>
                                     <li><a className="dropdown-item" href="#" onClick={this.handleUserType.bind(this,'NGO')}>NGO</a></li>
                                     
                                 </ul>

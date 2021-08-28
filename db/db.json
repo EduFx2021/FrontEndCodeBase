@@ -23,6 +23,30 @@
       "email": "spareacx@gmail.com",
       "user": "spareacx",
       "password": "Spare@123"
+    },
+    {
+      "id": "8b175960-042f-11ec-8109-cd5acbc68885",
+      "email": "anmolgmail.com",
+      "user": "an",
+      "password": ""
+    },
+    {
+      "id": "ac1d0600-042f-11ec-8109-cd5acbc68885",
+      "email": "anmol@gmail.com",
+      "user": "anmol",
+      "password": "Anmol@1234"
+    },
+    {
+      "id": "a0e42d30-0688-11ec-ab31-9bb91928f608",
+      "email": "",
+      "user": "",
+      "password": ""
+    },
+    {
+      "id": "a87a29a0-0688-11ec-ab31-9bb91928f608",
+      "email": "anmol",
+      "user": "",
+      "password": ""
     }
   ],
   "ngos": [

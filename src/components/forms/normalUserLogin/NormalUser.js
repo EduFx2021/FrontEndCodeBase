@@ -20,7 +20,6 @@ export default class NormalUser extends Component {
 
     handleUsername(e){
         e.target.classList.remove('is-invalid');
-        e.target.classList.add('is-valid');
     }
 
     handlePassword(e){
@@ -98,7 +97,7 @@ export default class NormalUser extends Component {
 
             this.state.users.forEach((x)=>{
                 console.log(x);
-                if(x.user === this.state.username && x.password===this.state.password){
+                if( (x.user === this.state.username||x.email===this.state.email) && x.password===this.state.password){
                     this.setState({
                         isAuthenticated:true
                     })
@@ -119,12 +118,13 @@ export default class NormalUser extends Component {
             <div>
                 <h4 className="loginTitle mb-4">Login to Your Account</h4>
                <form>
+                   
                     <div className="mb-3 form">
-                        <label htmlFor="username" className="form-label form__label">USERNAME</label>
+                        <label htmlFor="username" className="form-label form__label">USERNAME / EMAIL </label>
                         <input
                             type="name" 
                             className="form-control form__field " 
-                            placeholder="Enter username"
+                            placeholder="Enter Username or Email"
                             id="username" 
                             value={this.state.username}
                             onChange={this.onChangeHandler}
@@ -161,16 +161,16 @@ export default class NormalUser extends Component {
                         </button>
                     </div>
                     <div className="form-text mt-0 ms-5 ">
-                        No account?<a className="signUpLink" href="/signup"> <span style={{color:'blue'}}>Create one!</span></a>
+                        No account?<a className="signUpLink" href="/signup/normaluser"> <span style={{color:'blue'}}>Sign Up!</span></a>
                         <a className="signUpLink float-end me-5" href="#">Forgot Password?</a>
                     </div>
                 </form>
                 <p className="text-center">OR</p> 
-                <h5 className="loginTitle">Login with Social Media</h5>
-                <div className="socialIcons">
-                    <i className="fab fa-google fa-2x me-2"></i>
-                    <i className="fab fa-twitter fa-2x mx-2"></i>
-                    <i className="fab fa-facebook fa-2x mx-2"></i>
+                <h5 className="loginSocial mb-4">Login with :</h5>
+                <div className="socialIcons ms-5 mb-4">
+                    <i className="fab fa-border fa-google fa-2x me-2"></i>
+                    <i className="fab fa-border fa-twitter fa-2x mx-2"></i>
+                    <i className="fab fa-border fa-facebook fa-2x mx-2"></i>
                 </div>
             </div>
         )

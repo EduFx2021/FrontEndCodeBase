@@ -1,6 +1,16 @@
 .modal-body {
   padding: 0rem !important;
 }
+.modal-header{
+  justify-content: unset;
+  padding-left: 44px;
+}
+.modal-title {
+  margin-left: 5px;
+}
+.closeBtn {
+  margin-left: 240px;
+}
 .form__label{
   margin-left: 45px;
   margin-bottom: 0px;
@@ -45,10 +55,19 @@
   width: 80%;
   margin-left: 45px;
 }
+.loginSocial {
+  margin-left: 190px;
+  font-size: 22px;
+}
 .socialIcons{
   margin-top: 20px;
-  margin-left: 45px;
+  margin-left: 160px !important;
   margin-bottom: 30px;
+}
+.fab{
+  border-width: thin;
+  border-radius: 50%;
+  border-color: #4285f4;
 }
 .signUpLink {
   color: black;
@@ -89,11 +108,15 @@
  
 }
 
+.headerSignup {
+  margin-left: 140px;
+}
+
 .normalusersignup {
   background-image: url('../images/Environment.svg');
   background-color:white;
   background-repeat: no-repeat;
-  background-size:40%;
+  background-size:43%;
   background-position-y: 100px;
 }
 

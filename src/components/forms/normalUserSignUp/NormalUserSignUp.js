@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../../../css/form.css';
 import { v1 as uuidv1 } from 'uuid';
+import { Link } from "react-router-dom";
 
 export default class NormalUserSignUp extends Component {
     constructor(props){
@@ -142,14 +143,14 @@ export default class NormalUserSignUp extends Component {
 
     render() {
         return (
-            <div className="normalusersignup" style={{height:"100vh"}}>
-                <div className="container">
+            <div className="normalusersignup" id="normalSignUp" style={{height:"100vh"}}>
+                <div className="container" style={{marginLeft:"0px"}}>
                     <div className="row">
-                        <div className="col-6">
-
+                        <div className="col-6">  
+                        <Link to="/" type="button" className="btn btn-outline-dark btn-sm mt-2">Home</Link>  
                         </div>
-                        <div className="col-6 pt-4">
-                            <h3 className="mt-5 ms-4 display-5 "style={{color:"#4d4d4d"}}>Normal User Sign Up</h3>
+                        <div className="col-6 " style={{marginLeft:"650px"}}>
+                            <h3 className="mt-5 ms-4 display-5 "style={{color:"#4d4d4d"}}>Individual User Sign Up</h3>
 
                             <form>
                                 <div className="mb-1 ms-4 mt-2">
@@ -222,6 +223,9 @@ export default class NormalUserSignUp extends Component {
                                         onChange={this.onChangeHandler}
                                     />
                                     <label className="form-check-label" htmlFor="exampleCheck1" style={{color:"black"}}>I Agree to <a href="https://www.termsandconditionsgenerator.com/live.php?token=QQ4YtMqswIGRlDHar7w03s7oAjjRXChF">terms and conditions</a></label>
+                                </div>
+                                <div className="form-text mt-0 ms-4 ">
+                                    Are you a NGO ? <a className="signUpLink" href="#ngoSignUp"> <span style={{color:'blue'}}>Sign Up here!</span></a>
                                 </div>
                                 <div className="d-grid gap-2 loginBtn">
                                     <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}

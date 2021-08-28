@@ -38,9 +38,9 @@ export default class App extends Component{
               }
             />
             
-            <Route exact path="/signup" component={SignUp}/>
-            <Route exact path="/signup/normaluser" component={NormalUserSignUp}/>
-            <Route exact path="/signup/ngo" component={NGOSignUp}/>
+            <Route exact path="/signup" render={(props)=>(<SignUp {...props} showModal={this.showModal}/>)}/>
+            {/* <Route exact path="/signup/normaluser" component={NormalUserSignUp}/>
+            <Route exact path="/signup/ngo" component={NGOSignUp}/> */}
           </Switch>
         </div>
       </Router>
