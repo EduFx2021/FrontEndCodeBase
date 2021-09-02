@@ -4,6 +4,7 @@ import ngoSignUp from '../../images/NgoGroup.svg';
 import { Link , animateScroll as scroll } from "react-scroll";
 import NormalUserSignUp from './normalUserSignUp/NormalUserSignUp'
 import NGOSignUp from './ngoSignUp/NGOSignUp';
+import logo from '../../images/logo.png'
 
 export default class SignUp extends Component {
 
@@ -15,7 +16,8 @@ export default class SignUp extends Component {
         return (
             <div className="signup" style={{height:"100vh",backgroundColor:"white"}}>
                 <div className="container p-4">
-                    <h2 className="text-center display-3 headerSignup" style={{color:"black", display:"inline"}}>
+                    <h2 className="display-3 headerSignup" style={{color:"black", display:"inline"}}>
+                        <img src={logo} width="65" height="65" style={{marginRight:"15px"}} />
                         <a href="/" style={{color:"#00adef", textDecoration:"none", fontWeight:"450"}}>Eco-Action</a> Create an Account
                     </h2>
                     <Link to="/" type="button" className="btn btn-outline-dark float-end mt-4" onClick={this.loginHandler}>Login</Link>

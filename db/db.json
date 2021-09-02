@@ -24,7 +24,6 @@
       "user": "spareacx",
       "password": "Spare@123"
     },
-    
     {
       "id": "ac1d0600-042f-11ec-8109-cd5acbc68885",
       "email": "anmol@gmail.com",
@@ -42,6 +41,18 @@
       "email": "anmol",
       "user": "",
       "password": ""
+    },
+    {
+      "id": "f7e59fb0-0c0a-11ec-8086-57778e344cb5",
+      "email": "anmolahuja",
+      "user": "",
+      "password": ""
+    },
+    {
+      "id": "c7f02360-0c0b-11ec-841b-2d6ccc6cf7b0",
+      "email": "anmol@gmail.com",
+      "user": "anmolahuja",
+      "password": "Anmol@359"
     }
   ],
   "ngos": [

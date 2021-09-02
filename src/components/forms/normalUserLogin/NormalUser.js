@@ -28,7 +28,6 @@ export default class NormalUser extends Component {
     componentDidMount(){
         this.usernameRef.current.addEventListener("keydown",this.handleUsername);
         this.passRef.current.addEventListener("keydown",this.handlePassword);
-        
     }
 
     onChangeHandler=(e)=>{
@@ -162,7 +161,7 @@ export default class NormalUser extends Component {
                 <h5 className="loginSocial mb-4">Login with :</h5>
                 <div className="socialIcons ms-5 mb-4">
                     <i className="fab fa-border fa-google fa-2x me-2"></i>
-                    <i className="fab fa-border fa-twitter fa-2x mx-2"></i>
+                    
                     <i className="fab fa-border fa-facebook fa-2x mx-2"></i>
                 </div>
             </div>
