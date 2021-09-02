@@ -67,16 +67,9 @@ export default class NormalUser extends Component {
         var minNumberofChars = 3;
         var maxNumberofChars = 16;
 
-        if(pass.length < minNumberofChars || pass.length > maxNumberofChars){
-           this.passRef.current.classList.add('is-invalid');
-           this.passError.current.innerText = "Password Length must be greater than 3 and less than 16";
-           this.setState({
-            isCorrect:false
-           });
-        }
-        else if(!regularExpression.test(pass)) {
+        if(pass===''){
             this.passRef.current.classList.add('is-invalid');
-            this.passError.current.innerText = "Password should contain atleast one number and one special character";
+            this.passError.current.innerText = "Please Enter your Password";
             this.setState({
                 isCorrect:false
             });

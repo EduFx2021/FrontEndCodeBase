@@ -50,17 +50,17 @@ export default class NormalUser extends Component {
         }
 
         //Password Validation
-        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-        var minNumberofChars = 6;
-        var maxNumberofChars = 16;
-
-        if(pass.length < minNumberofChars || pass.length > maxNumberofChars){
-           this.passRef.current.classList.add('is-invalid');
-           this.passError.current.innerText = "Password Length must be greater than 3 and less than 16";
-        }
-        if(!regularExpression.test(pass)) {
+        if(pass===''){
             this.passRef.current.classList.add('is-invalid');
-            this.passError.current.innerText = "Password should contain atleast one number and one special character";
+            this.passError.current.innerText = "Please Enter your Password";
+            this.setState({
+                isCorrect:false
+            });
+        }
+        else{
+            this.setState({
+                isCorrect:true
+            });
         }
 
 
