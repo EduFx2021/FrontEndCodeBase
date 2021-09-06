@@ -156,7 +156,7 @@ export default class NormalUserSignUp extends Component {
                         </div>
                         <div className="col-6 " style={{marginLeft:"650px"}}>
                             <h3 className="mt-5 ms-4 display-5 "style={{color:"#4d4d4d"}}>Individual User Sign Up</h3>
-
+                            
                             <form>
                                 <div className="mb-1 ms-4 mt-2">
                                     <label htmlFor="normalUserEmail" className="form-label">Email address</label>
@@ -190,7 +190,9 @@ export default class NormalUserSignUp extends Component {
                             
                                     </div>
                                 </div>
-                                <PhoneAuth/>
+                            </form>
+                            <PhoneAuth/>
+                            <form>    
                                 <div className="mb-2 ms-4">
                                     <label htmlFor="normalUserPassword " className="form-label">Password</label>
                                     <input 

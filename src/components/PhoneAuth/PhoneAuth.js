@@ -64,9 +64,9 @@ export default class PhoneAuth extends Component {
         const code = this.state.otp;
         console.log(code);
         window.confirmationResult.confirm(code).then((result) => {
-            // User signed in successfully.
+            
             const user = result.user;
-            console.log("Success")
+            alert("Success")
         }).catch((error) => {
             console.log("Fail");
         });
@@ -75,7 +75,7 @@ export default class PhoneAuth extends Component {
     render() {
         return (
             <div>
-                <form >
+                <form onSubmit={this.onSignInSubmit} >
                     <div className="mb-1 ms-4 mt-2">
                         <label htmlFor="phoneNumber" className="form-label">Phone number</label>
                         <input 
@@ -89,7 +89,7 @@ export default class PhoneAuth extends Component {
                         />
                         <button 
                             className="btn btn-sm btn-outline-dark mt-1 verifyBtn"
-                            onClick={this.onSignInSubmit}
+                            type="submit"
                             ref={this.verifyBtnRef}
                         >
                             verify
@@ -100,7 +100,7 @@ export default class PhoneAuth extends Component {
                         </div>
                     </div>
                 </form>
-                <form >    
+                <form onSubmit={this.onSubmitOtp}>    
                     <div className="mb-1 ms-4 mt-2 d-none " ref={this.otpdivRef}>
                         
                         <input 
@@ -113,9 +113,8 @@ export default class PhoneAuth extends Component {
                             ref={this.otpRef}
                         />
                         <button
-                            onClick={this.onSubmitOtp}
+                            type="submit"
                             className="btn btn-sm btn-outline-dark mt-1 verifyBtn"
-                            
                         >submit</button>
                         <div className="invalid-feedback " ref={this.otpError}>
                         </div>
