@@ -3,8 +3,8 @@ import axios from 'axios';
 import '../../../css/form.css';
 import { v1 as uuidv1 } from 'uuid';
 import { Link } from "react-router-dom";
-import firebase from '../../firebase';
-import { getAuth,RecaptchaVerifier,signInWithPhoneNumber } from "firebase/auth";
+import PhoneAuth from '../../PhoneAuth/PhoneAuth';
+
 
 export default class NormalUserSignUp extends Component {
     constructor(props){
@@ -19,18 +19,11 @@ export default class NormalUserSignUp extends Component {
         this.confirmPassError= React.createRef();
         this.signUpButtonRef= React.createRef();
         this.emailError= React.createRef();
-        this.phoneRef= React.createRef();
-        this.phoneError= React.createRef();
-        this.otpRef= React.createRef();
-        this.otpdivRef= React.createRef();
-        this.otpError=React.createRef();
-        this.verifyBtnRef= React.createRef();
+        
 
         this.state={
             email:'',
             username:'',
-            phone:'',
-            otp:'',
             password:'',
             confirmpassword:''
         }
@@ -41,49 +34,7 @@ export default class NormalUserSignUp extends Component {
         e.target.classList.remove('is-invalid');
     }
     
-    onSignInSubmit = (e) => {
-        e.preventDefault();
-        this.verifyBtnRef.current.classList.add('d-none');
-        this.otpdivRef.current.classList.remove('d-none');
-
-        this.setUpRecaptcha();
-        // Const phoneNumber me apna input number daalna h
-        const phoneNumber = "+91"+this.state.phone;
-        console.log(phoneNumber);
-        const appVerifier = window.recaptchaVerifier;
-
-        const auth = getAuth();
-        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-            .then((confirmationResult) => {
-            // SMS sent. Prompt user to type the code from the message, then sign the
-            // user in with confirmationResult.confirm(code).
-            window.confirmationResult = confirmationResult;
-            const code = prompt("Enter Otp")
-                confirmationResult.confirm(code).then((result) => {
-                    // User signed in successfully.
-                    const user = result.user;
-                    console.log(user);
-                    console.log("Success");
-                }).catch((error) => {
-                    console.log("fail");
-                });
-            
-            }).catch((error) => {
-            // Error; SMS not sent
-            // ...
-            });
-    }
-
-    setUpRecaptcha = () => {
-        const auth = getAuth();
-        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-        'size': 'invisible',
-        'callback': (response) => {
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-            this.onSignInSubmit();
-        }
-        }, auth);
-    }
+    
 
     componentDidMount(){
         this.signUpButtonRef.current.disabled=true;
@@ -239,46 +190,7 @@ export default class NormalUserSignUp extends Component {
                             
                                     </div>
                                 </div>
-                                <div className="mb-1 ms-4 mt-2">
-                                    <label htmlFor="phoneNumber" className="form-label">Phone number</label>
-                                    <input 
-                                        type="text" 
-                                        className="form-control form__field"
-                                        id="phoneNumber"
-                                        value={this.state.phone}
-                                        onChange={this.onChangeHandler}
-                                        name="phone"
-                                        ref={this.phoneRef}
-                                    />
-                                    <button 
-                                        className="btn btn-sm btn-outline-dark mt-1 verifyBtn"
-                                        onClick={this.onSignInSubmit}
-                                        ref={this.verifyBtnRef}
-                                    >
-                                        verify
-                                    </button>
-                                    <div id="recaptcha-container"></div>
-                                    <div className="invalid-feedback " ref={this.phoneError}>
-                            
-                                    </div>
-                                </div>
-                                <div className="mb-1 ms-4 mt-2 d-none " ref={this.otpdivRef}>
-                                    
-                                    <input 
-                                        type="number" 
-                                        className="form-control form__field"
-                                        id="otp"
-                                        value={this.state.otp}
-                                        onChange={this.onChangeHandler}
-                                        name="otp"
-                                        ref={this.otpRef}
-                                    />
-                                    <button className="btn btn-sm btn-outline-dark mt-1 verifyBtn"
-                                        onClick={this.onSignInSubmit}
-                                    >verify</button>
-                                    <div className="invalid-feedback " ref={this.otpError}>
-                                    </div>
-                                </div>
+                                <PhoneAuth/>
                                 <div className="mb-2 ms-4">
                                     <label htmlFor="normalUserPassword " className="form-label">Password</label>
                                     <input 
