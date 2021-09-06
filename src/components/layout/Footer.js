@@ -1,11 +1,11 @@
 import React from 'react'
 import logo from '../../images/logo.png'
-import '../../css/Home.css';
+import '../../css/footer.css';
 
 export default function Footer() {
     return (
         <div>
-            <footer id="footer">
+            <footer id="footer" className="footer">
                 <div className="footBorder">-</div>
                     <div id="content">
                         <img className="BnW" src={logo}/>

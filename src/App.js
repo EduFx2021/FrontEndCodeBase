@@ -6,7 +6,8 @@ import HomePage from './components/layout/HomePage';
 import Login from './components/forms/Login';
 import SignUp from './components/forms/SignUp';
 import Footer from './components/layout/Footer';
-import Progress from './components/progress/Progress';
+// import Progress from './components/progress/Progress';
+import './css/App.css'
 
 export default class App extends Component{
   state={
@@ -39,7 +40,7 @@ export default class App extends Component{
             />
             
             <Route exact path="/signup" render={(props)=>(<SignUp {...props} showModal={this.showModal}/>)}/>
-            <Route exact path="/progress" component={Progress}/>
+            {/* <Route exact path="/progress" component={Progress}/> */}
           </Switch>
         </div>
       </Router>

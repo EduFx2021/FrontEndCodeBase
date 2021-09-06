@@ -33,8 +33,6 @@ export default class NormalUserSignUp extends Component {
     handleInput(e){
         e.target.classList.remove('is-invalid');
     }
-    
-    
 
     componentDidMount(){
         this.signUpButtonRef.current.disabled=true;
@@ -148,7 +146,7 @@ export default class NormalUserSignUp extends Component {
 
     render() {
         return (
-            <div className="normalusersignup" id="normalSignUp" style={{height:"100vh"}}>
+            <div className="normalusersignup" id="normalSignUp" >
                 <div className="container" style={{marginLeft:"0px"}}>
                     <div className="row">
                         <div className="col-6">  
