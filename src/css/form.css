@@ -133,6 +133,10 @@
   margin-left: 25px;
 }
 
+.normalusersignup .phoneNumber {
+  width: 68%;
+}
+
 .ngosignup {
   background-image: url('../images/Ngo.svg');
   background-color:white;
