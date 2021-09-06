@@ -1,0 +1,159 @@
+.modal-body {
+  padding: 0rem !important;
+}
+.modal-header{
+  justify-content: unset;
+  padding-left: 44px;
+}
+.modal-title {
+  margin-left: 5px;
+}
+.closeBtn {
+  margin-left: 240px;
+}
+.form__label{
+  margin-left: 45px;
+  margin-bottom: 0px;
+  font-size: 15px !important;
+}
+.loginTitle {
+  font-size: 25px;
+  margin-left: 45px;
+}
+.dropdownBtn{
+  width: 80%;
+}
+.form__field {
+    font-family: inherit;
+    margin-left: 45px;
+    width: 80%;
+    border: 0;
+    border-bottom: 1px solid black;
+    outline: 0;
+    font-size: 1rem;
+    color: black;
+    padding: 3px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1rem;
+  cursor: text;
+  top: 18px;
+}
+
+.form__field:focus {
+  padding-bottom: 0px;
+  background-color: white;
+  font-weight: 500;
+  color: black;
+  border-width: 1px;
+  border-image: linear-gradient(to right, #FFFFFF, #FFFFFF);
+}
+.loginBtn {
+  width: 80%;
+  margin-left: 45px;
+}
+.loginSocial {
+  margin-left: 190px;
+  font-size: 22px;
+}
+.socialIcons{
+  margin-top: 20px;
+  margin-left: 187px !important;
+  margin-bottom: 30px;
+}
+.fab{
+  border-width: thin;
+  border-radius: 50%;
+  border-color: #4285f4;
+}
+.signUpLink {
+  color: black;
+  font-size: 15px;
+}
+.signUpLink:hover {
+  color: #00adef;
+}
+
+
+/* Google icon color */
+.fa-google {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.fa-twitter {
+  color:rgb(29, 161, 242);
+}
+.fa-facebook {
+  color: #1877F2;
+}
+.fab:hover{
+  cursor: pointer;
+}
+
+/* SIGNUP form CSS */
+.signup {
+  background-color: #1F2833; 
+  height: 100vh; 
+}
+
+.card:hover {
+  background-color: #D3D3D3;
+  cursor: pointer;
+ 
+}
+
+.headerSignup {
+  margin-left: 60px;
+}
+
+.normalusersignup {
+  background-image: url('../images/Environment.svg');
+  background-color:white;
+  background-repeat: no-repeat;
+  background-size:43%;
+  background-position-y: 100px;
+}
+
+.normalusersignup .form-label {
+  color: black !important;
+  margin-top: 10px;
+}
+.normalusersignup .form__field {
+  margin-left: 0px;
+}
+
+.normalusersignup .loginBtn {
+  width: 80%;
+  margin-left: 25px;
+}
+
+.normalusersignup .phoneNumber {
+  width: 68%;
+}
+
+.ngosignup {
+  background-image: url('../images/Ngo.svg');
+  background-color:white;
+  background-repeat: no-repeat;
+  background-size:50%;
+  background-position-x: -83px;
+  background-position-y: 40px;
+}
+
+.ngosignup .form__field {
+  margin-left: 0px;
+}
+.ngosignup .loginBtn {
+  width: 80%;
+  margin-left: 25px;
+}
+
+.signup .footBorder {
+  background-color: #4285f4 !important;
+}

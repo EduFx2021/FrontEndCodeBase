@@ -1,0 +1,71 @@
+{
+  "users": [
+    {
+      "id": "e66b9f10-02bd-11ec-8d83-bd776df0602a",
+      "email": "anmolahuja359@gmail.com",
+      "user": "anmolahuja",
+      "password": "Anmol@1234"
+    },
+    {
+      "id": "35b375e0-02c1-11ec-a085-f9de7e5c17d2",
+      "email": "anmolahuja01@gmail.com",
+      "user": "anmolahuja01",
+      "password": "Yo@123"
+    },
+    {
+      "id": "941af0e0-02c1-11ec-adf5-c38c00bf38b6",
+      "email": "alice123@gmail.com",
+      "user": "alice123",
+      "password": "alice@123"
+    },
+    {
+      "id": "d2981370-03f7-11ec-974e-6f276ba8ec6d",
+      "email": "spareacx@gmail.com",
+      "user": "spareacx",
+      "password": "Spare@123"
+    },
+    {
+      "id": "ac1d0600-042f-11ec-8109-cd5acbc68885",
+      "email": "anmol@gmail.com",
+      "user": "anmol",
+      "password": "Anmol@1234"
+    },
+    {
+      "id": "a0e42d30-0688-11ec-ab31-9bb91928f608",
+      "email": "",
+      "user": "",
+      "password": ""
+    },
+    {
+      "id": "a87a29a0-0688-11ec-ab31-9bb91928f608",
+      "email": "anmol",
+      "user": "",
+      "password": ""
+    },
+    {
+      "id": "f7e59fb0-0c0a-11ec-8086-57778e344cb5",
+      "email": "anmolahuja",
+      "user": "",
+      "password": ""
+    },
+    {
+      "id": "c7f02360-0c0b-11ec-841b-2d6ccc6cf7b0",
+      "email": "anmol@gmail.com",
+      "user": "anmolahuja",
+      "password": "Anmol@359"
+    }
+  ],
+  "ngos": [
+    {
+      "id": 1,
+      "user": "12345",
+      "password": "Anmol@1234"
+    },
+    {
+      "id": "034d8ef0-03f8-11ec-9949-5f721bea1f3c",
+      "email": "ngo@helpindia.org",
+      "user": "54321",
+      "password": "Ngo@123"
+    }
+  ]
+}
