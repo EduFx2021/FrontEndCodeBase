@@ -70,12 +70,12 @@ export default class PhoneAuth extends Component {
     onSubmitOtp = (e) => {
         e.preventDefault();
         
-        if(this.state.otp || this.state.otp.length<6 ){
-            this.otpRef.classList.add('is-invalid');
+        if(this.state.otp==='' || this.state.otp.length<6 ){
+            this.otpRef.current.classList.add('is-invalid');
         }
         else {
-            if(this.otpRef.classList.contains('is-invalid')){
-                this.otpRef.classList.remove('is-invalid')
+            if(this.otpRef.current.classList.contains('is-invalid')){
+                this.otpRef.current.classList.remove('is-invalid')
             }
 
             const code = this.state.otp;

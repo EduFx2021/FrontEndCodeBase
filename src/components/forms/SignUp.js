@@ -5,6 +5,7 @@ import { Link , animateScroll as scroll } from "react-scroll";
 import NormalUserSignUp from './normalUserSignUp/NormalUserSignUp'
 import NGOSignUp from './ngoSignUp/NGOSignUp';
 import logo from '../../images/logo.png'
+import Footer from '../layout/Footer';
 
 export default class SignUp extends Component {
 
@@ -62,6 +63,7 @@ export default class SignUp extends Component {
                 <div style={{height:"100px"}}></div>
                 <NormalUserSignUp/>
                 <NGOSignUp/>
+                <Footer/>
             </div>
         )
     }

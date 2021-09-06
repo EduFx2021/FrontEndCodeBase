@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Header from './components/layout/Header';
-import './css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import HomePage from './components/layout/HomePage';
 import Login from './components/forms/Login';
-import SignUp from './components/forms/SignUp'
-import NormalUserSignUp from './components/forms/normalUserSignUp/NormalUserSignUp';
-import NGOSignUp from './components/forms/ngoSignUp/NGOSignUp';
+import SignUp from './components/forms/SignUp';
+import Footer from './components/layout/Footer';
+import Progress from './components/progress/Progress';
 
 export default class App extends Component{
   state={
@@ -34,13 +33,13 @@ export default class App extends Component{
                 <>
                   <Header showModal={this.showModal} showSignUp={this.showSignUp} />
                   <HomePage />
+                  <Footer/>
                 </>
               }
             />
             
             <Route exact path="/signup" render={(props)=>(<SignUp {...props} showModal={this.showModal}/>)}/>
-            {/* <Route exact path="/signup/normaluser" component={NormalUserSignUp}/>
-            <Route exact path="/signup/ngo" component={NGOSignUp}/> */}
+            <Route exact path="/progress" component={Progress}/>
           </Switch>
         </div>
       </Router>

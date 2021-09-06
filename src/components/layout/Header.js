@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../../images/logo.png';
+import '../../css/Home.css';
 
 export default class Header extends Component {
 
@@ -8,17 +9,21 @@ export default class Header extends Component {
     render() {
         return (
            <div>
-                <nav className="navbar navbar-dark">
-                    <a className="navbar-brand" href="/">
-                        <img src={logo} width="40" height="40" className="d-inline-block align-top mx-3 rounded" alt=""/>
-                        EcoAction
-                    </a>
-                    <div className="d-flex flex-row-reversed">
-                        <a className="nav-item nav-link " href="#" onClick={this.showModal} data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                        <a className="nav-item nav-link" href="/signup" onClick={this.showSignUpPage}>Sign Up</a>
+                <header>
+                    <img src={logo}/>
+                    <div className="header-title">
+                        <b>Eco Action</b>
+                        <div className="header-right">
+                            <a className="active " href="#" onClick={this.showModal} data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                            <a className="active ms-3" href="/signup" onClick={this.showSignUpPage}>Sign Up</a>
+                        </div>
+                        <p>
+                            SDG 4.7 - Quality Education
+                        </p>
                     </div>
-                    
-                </nav>
+
+                </header>
+                
             </div>
         )
     }

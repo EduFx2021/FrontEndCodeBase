@@ -85,13 +85,13 @@ export default class NormalUserSignUp extends Component {
             isValid=true;
         }
         //Password Validation
-        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-        var minNumberofChars = 3;
-        var maxNumberofChars = 16;
+        var regularExpression = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
+        var minNumberofChars = 8;
+        var maxNumberofChars = 25;
 
         if(pass.length < minNumberofChars || pass.length > maxNumberofChars){
            this.passRef.current.classList.add('is-invalid');
-           this.passError.current.innerText = "Password Length must be greater than 3 and less than 16";
+           this.passError.current.innerText = "Password Length must be greater than 8 and less than 25";
            isValid=false;
         }
         else if(!regularExpression.test(pass)) {
