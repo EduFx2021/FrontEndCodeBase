@@ -85,6 +85,9 @@ export default class PhoneAuth extends Component {
                 this.phoneRef.current.classList.add('is-valid');
                 this.phoneRef.current.readOnly= true;
                 this.otpdivRef.current.classList.add('d-none');
+                this.props.isPhoneAuthenticated();
+                this.props.onPhoneNumberVerification(this, this.state.phone);
+                
 
             }).catch((error) => {
                 console.log("Fail");

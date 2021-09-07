@@ -97,17 +97,13 @@ export default class NGOSignUp extends Component {
             this.passError.current.innerText = "Password should contain atleast one number and one special character";
             isValid=false;
         }
-        else{
-            isValid=true;
-        }
-
-        if(this.confirmPassRef.current.value===this.passRef.current.value){
-            isValid=true;
-        }
-        else {
+        else if (this.confirmPassRef.current.value!==this.passRef.current.value){
             this.confirmPassRef.current.classList.add('is-invalid');
             this.confirmPassError.current.innerText = "Password doesn't match";
             isValid=false;
+        }
+        else{
+            isValid=true;
         }
 
         if(isValid){
@@ -132,6 +128,9 @@ export default class NGOSignUp extends Component {
                 alert('Signed Up');
             });
             
+        }
+        else {
+            alert("Sign Up Failed");
         }
 
         //clear input fields 

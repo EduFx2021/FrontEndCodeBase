@@ -1,6 +1,9 @@
 #miscellaneous
 /misc
 
+#local database
+/db
+
 # dependencies
 /node_modules
 /.pnp

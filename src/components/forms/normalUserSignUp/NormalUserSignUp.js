@@ -25,7 +25,9 @@ export default class NormalUserSignUp extends Component {
             email:'',
             username:'',
             password:'',
-            confirmpassword:''
+            confirmpassword:'',
+            phone:'',
+            isPhoneAuthenticated:false
         }
 
     }
@@ -97,17 +99,17 @@ export default class NormalUserSignUp extends Component {
             this.passError.current.innerText = "Password should contain atleast one number and one special character";
             isValid=false;
         }
-        else{
-            isValid=true;
-        }
-
-        if(this.confirmPassRef.current.value===this.passRef.current.value){
-            isValid=true;
-        }
-        else {
+        else if(this.confirmPassRef.current.value!==this.passRef.current.value){
             this.confirmPassRef.current.classList.add('is-invalid');
             this.confirmPassError.current.innerText = "Password doesn't match";
             isValid=false;
+        }
+        else if (!this.state.isPhoneAuthenticated){
+            isValid=false;
+            alert("please enter and verify your phone number!!")
+        }
+        else{
+            isValid=true;
         }
 
         if(isValid){
@@ -122,6 +124,7 @@ export default class NormalUserSignUp extends Component {
                 "id":uuidv1(),
                 "email":this.state.email,
                 "user":this.state.username,
+                "phone":this.state.phone,
                 "password":this.state.password
             }
 
@@ -133,6 +136,9 @@ export default class NormalUserSignUp extends Component {
             });
             
         }
+        else {
+            alert("Sign Up failed");
+        }
 
         //clear input fields 
         this.setState({
@@ -142,6 +148,18 @@ export default class NormalUserSignUp extends Component {
             confirmpassword:''
         });
 
+    }
+
+    onPhoneAuthentication = (e) => {
+        this.setState({
+            isPhoneAuthenticated:true
+        });
+    }
+
+    onPhoneNumberVerification = (e,ph) => {
+        this.setState({
+            phone:ph
+        });
     }
 
     render() {
@@ -189,7 +207,10 @@ export default class NormalUserSignUp extends Component {
                                     </div>
                                 </div>
                             </form>
-                            <PhoneAuth/>
+                            
+                            <PhoneAuth isPhoneAuthenticated={this.onPhoneAuthentication} onPhoneNumberVerification={this.onPhoneNumberVerification}/>
+                            
+                            
                             <form>    
                                 <div className="mb-2 ms-4">
                                     <label htmlFor="normalUserPassword " className="form-label">Password</label>
