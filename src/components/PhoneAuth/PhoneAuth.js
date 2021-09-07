@@ -83,11 +83,13 @@ export default class PhoneAuth extends Component {
                 
                 const user = result.user;
                 this.phoneRef.current.classList.add('is-valid');
+                this.phoneRef.current.readOnly= true;
                 this.otpdivRef.current.classList.add('d-none');
 
             }).catch((error) => {
                 console.log("Fail");
                 this.phoneRef.current.classList.add('is-invalid');
+                this.phoneRef.current.readOnly= false;
                 this.otpdivRef.current.classList.add('d-none');
                 this.verifyBtnRef.current.classList.remove('d-none');
                 this.setState({
