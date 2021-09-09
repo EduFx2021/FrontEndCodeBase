@@ -27,7 +27,8 @@ export default class NormalUserSignUp extends Component {
             password:'',
             confirmpassword:'',
             phone:'',
-            isPhoneAuthenticated:false
+            isPhoneAuthenticated:false,
+            users:[]
         }
 
     }
@@ -56,9 +57,10 @@ export default class NormalUserSignUp extends Component {
         }
     }
 
-    handleFormSubmit=()=>{
+    handleFormSubmit=async function(){
         const pass= this.state.password;
         let isValid=false;
+        let isRegistered=false;
         //validate email input
         var emailExpr = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
         if(!emailExpr.test(this.state.email)){
@@ -113,28 +115,49 @@ export default class NormalUserSignUp extends Component {
         }
 
         if(isValid){
-            let users=[];
             //check user in database
-            axios.get('http://localhost:3000/users')
-            .then(response=>this.setState({
-                users: response.data
-            }));
-
-            const data = {
-                "id":uuidv1(),
-                "email":this.state.email,
-                "user":this.state.username,
-                "phone":this.state.phone,
-                "password":this.state.password
-            }
-
-            users.push(data);
+            const res=await axios.get('http://localhost:3000/users');
             
-            axios.post('http://localhost:3000/users',data)
-            .then(res=>{
-                alert('Signed Up');
+            this.setState({
+                users: res.data
             });
+
+            console.log(this.state.users);
+            this.state.users.forEach((user)=> {
+                console.log(user.phone === this.state.phone)
+                if(user.email === this.state.email ){
+                    alert("User Already registered please login");
+                    isRegistered=true;
+                }
             
+            })
+            
+            this.state.users.forEach((user)=> {
+                console.log(user.user===this.state.username);
+                if(user.user === this.state.username){
+                    alert("Username already there please change it and try again");
+                    isRegistered=true;
+                }
+            })
+
+            if(isRegistered===false){
+                const data = {
+                    "id":uuidv1(),
+                    "email":this.state.email,
+                    "user":this.state.username,
+                    "phone":this.state.phone,
+                    "password":this.state.password
+                }
+
+                this.setState({
+                    users:[...this.state.users,data]
+                });
+
+                axios.post('http://localhost:3000/users',data)
+                .then(res=>{
+                    alert('Signed Up');
+                });
+            }
         }
         else {
             alert("Sign Up failed");
@@ -147,6 +170,7 @@ export default class NormalUserSignUp extends Component {
             password:'',
             confirmpassword:''
         });
+        this.checkboxref.current.checked=false;
 
     }
 
@@ -171,7 +195,7 @@ export default class NormalUserSignUp extends Component {
                         <Link to="/" type="button" className="btn btn-outline-dark btn-sm mt-2">Home</Link>  
                         </div>
                         <div className="col-6 " style={{marginLeft:"650px"}}>
-                            <h3 className="mt-5 ms-4 display-5 "style={{color:"#4d4d4d"}}>Individual User Sign Up</h3>
+                            <h3 className="mt-3 ms-4 display-5 "style={{color:"#4d4d4d"}}>Individual User Sign Up</h3>
                             
                             <form>
                                 <div className="mb-1 ms-4 mt-2">
@@ -256,7 +280,7 @@ export default class NormalUserSignUp extends Component {
                                 </div>
                                 <div className="d-grid gap-2 loginBtn">
                                     <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}
-                                    onClick={this.handleFormSubmit}
+                                    onClick={this.handleFormSubmit.bind(this)}
                                     ref={this.signUpButtonRef}
                                     >
                                     Sign Up

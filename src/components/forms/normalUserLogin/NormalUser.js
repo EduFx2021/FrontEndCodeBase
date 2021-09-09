@@ -36,7 +36,7 @@ export default class NormalUser extends Component {
         })
     }
 
-    handleFormSubmit=()=>{
+    handleFormSubmit=async function(){
         const pass= this.state.password;
         this.setState({
             isCorrect:false
@@ -82,13 +82,13 @@ export default class NormalUser extends Component {
 
         if(this.state.isCorrect){
             //check user in database
-            axios.get('http://localhost:3000/users')
-            .then(response=>this.setState({
+            const response = await axios.get('http://localhost:3000/users');
+            this.setState({
                 users: response.data
-            }));
+            });
 
             this.state.users.forEach((x)=>{
-                console.log(x);
+                
                 if( (x.user === this.state.username||x.email===this.state.email) && x.password===this.state.password){
                     this.setState({
                         isAuthenticated:true
@@ -147,7 +147,7 @@ export default class NormalUser extends Component {
 
                     <div className="d-grid gap-2 loginBtn">
                         <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}
-                        onClick={this.handleFormSubmit}
+                        onClick={this.handleFormSubmit.bind(this)}
                         >
                                 Login
                         </button>
