@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import Header from './components/layout/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch,Redirect} from 'react-router-dom';
 import HomePage from './components/layout/HomePage';
 import Login from './components/forms/Login';
 import SignUp from './components/forms/SignUp';
 import Footer from './components/layout/Footer';
+import { getAuth,getRedirectResult, signInWithPopup,GoogleAuthProvider } from "firebase/auth";
 // import Progress from './components/progress/Progress';
 import './css/App.css'
+import ProblemSearch from './components/ProblemSearch/ProblemSearch';
 
 export default class App extends Component{
-  state={
-    displayModal: false
+  
+  constructor() {
+    super();
+    this.state={
+      displayModal: false,
+      user:''
+    }
   }
 
   showModal=e=>{
@@ -19,14 +26,31 @@ export default class App extends Component{
       displayModal:!this.state.displayModal
     });
   }
+  getAuthenticationState= () => {
+    const auth = getAuth();
+    auth.onAuthStateChanged(function (user) {
+      if(user){
+        console.log('user logged in already');
+        return user;
+      }
+      else {
+        console.log('user not logged in already');
+        return null
+      }
+    });
+  }
+  componentDidMount=()=>{ 
+    this.setState({
+      user:this.getAuthenticationState,
+    });
 
-  
+  }
 
   render(){
     return (
       <Router>
         <div className="App">
-
+          {this.state.user?<Redirect to="/private"/>:<Redirect to="/"/>}
           <Login toggleModal={this.state.displayModal} showModal={this.showModal}/>
           {/* {this.state.displaySignUp?<SignUp/>:null} */}
           <Switch>
@@ -40,7 +64,10 @@ export default class App extends Component{
             />
             
             <Route exact path="/signup" render={(props)=>(<SignUp {...props} showModal={this.showModal}/>)}/>
+            <Route exact path="/private" component={ProblemSearch}></Route>
+          
             {/* <Route exact path="/progress" component={Progress}/> */}
+            <Route exact path="/private" component={ProblemSearch}></Route>
           </Switch>
         </div>
       </Router>

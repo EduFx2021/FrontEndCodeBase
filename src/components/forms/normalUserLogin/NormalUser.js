@@ -1,5 +1,9 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component } from 'react';
+import axios from 'axios';
+import { getAuth, signInWithPopup,GoogleAuthProvider,FacebookAuthProvider } from "firebase/auth";
+import {Redirect} from 'react-router';
+
+
 export default class NormalUser extends Component {
     constructor(props){
         super(props);
@@ -14,8 +18,58 @@ export default class NormalUser extends Component {
             password:'',
             users:[],
             isCorrect:false,
-            isAuthenticated:false
+            isAuthenticated:false,
+            isLoggedInWithSocial:false
         }
+    }
+
+    
+    googleLoginHandler=(e)=>{
+        const provider = new GoogleAuthProvider();
+        const auth = getAuth();
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // ...
+
+            console.log("Logged in successfully");
+            this.setState({
+                isLoggedInWithSocial:true
+            });
+            
+        }).catch((error) => {
+            // Handle Errors here.
+            console.log("Error Logging in");
+        });
+    }
+
+    facebookLoginHandler=()=> {
+        const provider = new FacebookAuthProvider();
+        const auth = getAuth();
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // The signed-in user info.
+            const user = result.user;
+
+            console.log("Logged in with Facebook");
+            this.setState({
+                isLoggedInWithSocial:true
+            });
+        })
+        .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The AuthCredential type that was used.
+            const credential = FacebookAuthProvider.credentialFromError(error);
+
+        });
     }
 
     handleUsername(e){
@@ -108,62 +162,65 @@ export default class NormalUser extends Component {
     render() {
         return (
             <div>
-                <h4 className="loginTitle mb-4">Login to Your Account</h4>
-               <form>
-                   
-                    <div className="mb-3 form">
-                        <label htmlFor="username" className="form-label form__label">USERNAME / EMAIL </label>
-                        <input
-                            type="name" 
-                            className="form-control form__field " 
-                            placeholder="Enter Username or Email"
-                            id="username" 
-                            value={this.state.username}
-                            onChange={this.onChangeHandler}
-                            name="username"
-                            ref={this.usernameRef}
-                        />
-                        
-                        <div className="invalid-feedback ms-5" ref={this.usernameError}>
-                            
-                        </div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="userPassword" className="form-label form__label">PASSWORD</label>
-                        <input 
-                            type="password"
-                            className="form-control form__field"
-                            id="userPassword"
-                            placeholder="Enter Password"
-                            value={this.state.password}
-                            onChange={this.onChangeHandler}
-                            name="password"
-                            ref={this.passRef}
-                        />
-                        <div className="invalid-feedback ms-5" ref={this.passError}>
-                            
-                        </div>
-                    </div>
-
-                    <div className="d-grid gap-2 loginBtn">
-                        <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}
-                        onClick={this.handleFormSubmit.bind(this)}
-                        >
-                                Login
-                        </button>
-                    </div>
-                    <div className="form-text mt-0 ms-5 ">
-                        No account?<a className="signUpLink" href="/signup/normaluser"> <span style={{color:'blue'}}>Sign Up!</span></a>
-                        <a className="signUpLink float-end me-5" href="#">Forgot Password?</a>
-                    </div>
-                </form>
-                <p className="text-center">OR</p> 
-                <h5 className="loginSocial mb-4">Login with :</h5>
-                <div className="socialIcons ms-5 mb-4">
-                    <i className="fab fa-border fa-google fa-2x me-2"></i>
+                <div>
+                    <h4 className="loginTitle mb-4">Login to Your Account</h4>
+                    <form>
                     
-                    <i className="fab fa-border fa-facebook fa-2x mx-2"></i>
-                </div>
+                        <div className="mb-3 form">
+                            <label htmlFor="username" className="form-label form__label">USERNAME / EMAIL </label>
+                            <input
+                                type="name" 
+                                className="form-control form__field " 
+                                placeholder="Enter Username or Email"
+                                id="username" 
+                                value={this.state.username}
+                                onChange={this.onChangeHandler}
+                                name="username"
+                                ref={this.usernameRef}
+                            />
+                            
+                            <div className="invalid-feedback ms-5" ref={this.usernameError}>
+                                
+                            </div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="userPassword" className="form-label form__label">PASSWORD</label>
+                            <input 
+                                type="password"
+                                className="form-control form__field"
+                                id="userPassword"
+                                placeholder="Enter Password"
+                                value={this.state.password}
+                                onChange={this.onChangeHandler}
+                                name="password"
+                                ref={this.passRef}
+                            />
+                            <div className="invalid-feedback ms-5" ref={this.passError}>
+                                
+                            </div>
+                        </div>
+
+                        <div className="d-grid gap-2 loginBtn">
+                            <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}
+                            onClick={this.handleFormSubmit.bind(this)}
+                            >
+                                    Login
+                            </button>
+                        </div>
+                        <div className="form-text mt-0 ms-5 ">
+                            No account?<a className="signUpLink" href="/signup/normaluser"> <span style={{color:'blue'}}>Sign Up!</span></a>
+                            <a className="signUpLink float-end me-5" href="#">Forgot Password?</a>
+                        </div>
+                    </form>
+                    <p className="text-center">OR</p> 
+                    <h5 className="loginSocial mb-4">Login with :</h5>
+                    <div className="socialIcons ms-5 mb-4">
+                        <i className="fab fa-border fa-google fa-2x me-2" onClick={this.googleLoginHandler} ></i>
+                        <i className="fab fa-border fa-twitter fa-2x mx-2"></i>
+                        <i className="fab fa-border fa-facebook fa-2x mx-2" onClick={this.facebookLoginHandler}></i>
+                    </div>
+                </div>    
+
             </div>
         )
     }

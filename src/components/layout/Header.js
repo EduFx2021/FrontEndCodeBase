@@ -14,7 +14,7 @@ export default class Header extends Component {
                     <div className="header-title">
                         <b>Eco Action</b>
                         <div className="header-right">
-                            <a className="active " href="#" onClick={this.showModal} data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                            <a className="active " href="/" onClick={this.showModal} data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
                             <a className="active ms-3" href="/signup" onClick={this.showSignUpPage}>Sign Up</a>
                         </div>
                         <p>
