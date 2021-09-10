@@ -26,22 +26,25 @@ export default class App extends Component{
       displayModal:!this.state.displayModal
     });
   }
-  getAuthenticationState= () => {
+
+  updateState(userDetail){
+    this.setState({
+      user:userDetail
+    });
+  }
+
+  componentDidMount=()=>{ 
     const auth = getAuth();
-    auth.onAuthStateChanged(function (user) {
-      if(user){
+    const storeThis= this;    // 'this' keyword is stored in a variable called storeThis so that we can use "this" keyword inside the onAuthStateChange Fucntion
+    auth.onAuthStateChanged(function (userDetail) {
+      if(userDetail){
         console.log('user logged in already');
-        return user;
+        storeThis.updateState(userDetail);
       }
       else {
         console.log('user not logged in already');
         return null
       }
-    });
-  }
-  componentDidMount=()=>{ 
-    this.setState({
-      user:this.getAuthenticationState,
     });
 
   }
