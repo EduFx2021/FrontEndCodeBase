@@ -21,18 +21,21 @@ export default class App extends Component{
     }
   }
 
+  // This method triggers login modal
   showModal=e=>{
     this.setState({
       displayModal:!this.state.displayModal
     });
   }
 
+  // This method updates user state so that logged in users are redirected to their private page
   updateState(userDetail){
     this.setState({
       user:userDetail
     });
   }
 
+  //This inbuilt method is fired everytime app.js is mounted on the DOM
   componentDidMount=()=>{ 
     const auth = getAuth();
     const storeThis= this;    // 'this' keyword is stored in a variable called storeThis so that we can use "this" keyword inside the onAuthStateChange Fucntion

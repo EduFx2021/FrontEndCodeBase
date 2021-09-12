@@ -9,6 +9,7 @@ import Footer from '../layout/Footer';
 
 export default class SignUp extends Component {
 
+    //This method triggers login modal on clicking login btn on sign up page
     loginHandler=e=>{
         this.props.showModal();
     }

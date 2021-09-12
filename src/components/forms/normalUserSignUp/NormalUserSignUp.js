@@ -33,10 +33,7 @@ export default class NormalUserSignUp extends Component {
 
     }
     
-    handleInput(e){
-        e.target.classList.remove('is-invalid');
-    }
-
+    //This method checks for events on form fields so as to remove invalid classes from these fields
     componentDidMount(){
         this.signUpButtonRef.current.disabled=true;
         this.usernameRef.current.addEventListener("keydown",this.handleInput);
@@ -44,7 +41,13 @@ export default class NormalUserSignUp extends Component {
         this.emailRef.current.addEventListener("keydown",this.handleInput);
         this.confirmPassRef.current.addEventListener("keydown",this.handleInput);
     }
+    
+    // This method removes 'is-invalid' class from validated fields
+    handleInput(e){
+        e.target.classList.remove('is-invalid');
+    }
 
+    // This method is responsible for changing states as per values entered in form fields
     onChangeHandler=(e)=>{
         this.setState({
             [e.target.name]:e.target.value
@@ -57,6 +60,7 @@ export default class NormalUserSignUp extends Component {
         }
     }
 
+    // This method is fired when the form is submitted
     handleFormSubmit=async function(){
         const pass= this.state.password;
         let isValid=false;
@@ -174,12 +178,14 @@ export default class NormalUserSignUp extends Component {
 
     }
 
+    //This method is to check if the Phone is authenticated
     onPhoneAuthentication = (e) => {
         this.setState({
             isPhoneAuthenticated:true
         });
     }
 
+    // This method fetches phone number from PhoneAuth.js and updates phone state
     onPhoneNumberVerification = (e,ph) => {
         this.setState({
             phone:ph

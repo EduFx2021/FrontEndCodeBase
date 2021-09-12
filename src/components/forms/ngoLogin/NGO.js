@@ -17,6 +17,8 @@ export default class NormalUser extends Component {
         }
     }
 
+    // These methods is for adding is-invalid class to the username field if it's not valid
+
     handleUsername(e){
         e.target.classList.remove('is-invalid');
         e.target.classList.add('is-valid');
@@ -25,10 +27,11 @@ export default class NormalUser extends Component {
     handlePassword(e){
         e.target.classList.remove('is-invalid');
     }
+
+    //This method checks for events on password and username field so as to remove invalid classes from username and password fields
     componentDidMount(){
         this.usernameRef.current.addEventListener("keydown",this.handleUsername);
-        this.passRef.current.addEventListener("keydown",this.handlePassword);
-        
+        this.passRef.current.addEventListener("keydown",this.handlePassword);    
     }
 
     onChangeHandler=(e)=>{

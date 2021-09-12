@@ -30,10 +30,12 @@ export default class NGOSignUp extends Component {
 
     }
     
+    //This method removes 'is-invalid' class from validated input fields
     handleInput(e){
         e.target.classList.remove('is-invalid');
     }
-    
+
+    //This method checks for events on form fields so as to remove invalid classes from these fields
     componentDidMount(){
         this.signUpButtonRef.current.disabled=true;
         this.ngoIdRef.current.addEventListener("keydown",this.handleInput);
@@ -42,6 +44,7 @@ export default class NGOSignUp extends Component {
         this.confirmPassRef.current.addEventListener("keydown",this.handleInput);
     }
 
+    // This method is responsible for changing states as per values entered in form fields
     onChangeHandler=(e)=>{
         this.setState({
             [e.target.name]:e.target.value
@@ -54,6 +57,7 @@ export default class NGOSignUp extends Component {
         }
     }
 
+    // This method is fired when the form is submitted
     handleFormSubmit=()=>{
         const pass= this.state.password;
         let isValid=false;

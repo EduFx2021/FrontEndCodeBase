@@ -23,7 +23,13 @@ export default class NormalUser extends Component {
         }
     }
 
-    
+    //This method checks for events on password and username field so as to remove invalid classes from username and password fields
+    componentDidMount(){
+        this.usernameRef.current.addEventListener("keydown",this.handleUsername);
+        this.passRef.current.addEventListener("keydown",this.handlePassword);
+    }
+
+    // This method is responsible for handling logins through Google
     googleLoginHandler=(e)=>{
         const provider = new GoogleAuthProvider();
         const auth = getAuth();
@@ -37,9 +43,7 @@ export default class NormalUser extends Component {
             // ...
 
             console.log("Logged in successfully");
-            this.setState({
-                isLoggedInWithSocial:true
-            });
+            window.location.reload();
             
         }).catch((error) => {
             // Handle Errors here.
@@ -47,6 +51,7 @@ export default class NormalUser extends Component {
         });
     }
 
+    // This method is responsible for handling logins through Facebook
     facebookLoginHandler=()=> {
         const provider = new FacebookAuthProvider();
         const auth = getAuth();
@@ -56,9 +61,7 @@ export default class NormalUser extends Component {
             const user = result.user;
 
             console.log("Logged in with Facebook");
-            this.setState({
-                isLoggedInWithSocial:true
-            });
+            window.location.reload();
         })
         .catch((error) => {
             // Handle Errors here.
@@ -72,24 +75,22 @@ export default class NormalUser extends Component {
         });
     }
 
+    // These methods is for adding is-invalid class to the username field if it's not valid
     handleUsername(e){
         e.target.classList.remove('is-invalid');
     }
-
     handlePassword(e){
         e.target.classList.remove('is-invalid');
     }
-    componentDidMount(){
-        this.usernameRef.current.addEventListener("keydown",this.handleUsername);
-        this.passRef.current.addEventListener("keydown",this.handlePassword);
-    }
 
+    // This method is responsible for changing states as per values entered in form fields
     onChangeHandler=(e)=>{
         this.setState({
             [e.target.name]:e.target.value
         })
     }
 
+    // This method is fired when the form is submitted
     handleFormSubmit=async function(){
         const pass= this.state.password;
         this.setState({

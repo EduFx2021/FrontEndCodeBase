@@ -17,17 +17,22 @@ export default class Login extends Component {
         }
     }
 
+    //This method is responsible for closing the modal on clicking close btn
     handleClose=()=>{
         this.props.showModal();
         this.setState({
             showForm:false
         });
     }
+
+    //This method toggles dropdown menu
     expandDropdown=()=>{
         this.setState({
             expandDropdown:!this.state.expandDropdown
         });
     }
+
+    // This method renders normal user or ngo form as per user's selection
     renderForm(type){
         if(type==='Normal'){
             ReactDOM.render(<NormalUser hideModal={this.handleClose}/>,this.loginForm.current);
@@ -36,6 +41,8 @@ export default class Login extends Component {
             ReactDOM.render(<NGO hideModal={this.handleClose}/>,this.loginForm.current);
         }
     }
+
+    //This method changes usertype state to the type of user selected in dropdown menu
     handleUserType=(type)=>{
         this.setState({
             showForm:true,
