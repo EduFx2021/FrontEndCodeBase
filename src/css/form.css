@@ -159,3 +159,8 @@
 .signup .footBorder {
   background-color: #4285f4 !important;
 }
+
+
+.forgotPassword .form__field {
+  margin-left: 0px;
+}

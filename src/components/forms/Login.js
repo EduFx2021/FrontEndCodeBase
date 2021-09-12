@@ -4,6 +4,7 @@ import logo from '../../images/logo.png'
 import NormalUser from './normalUserLogin/NormalUser'
 import NGO from './ngoLogin/NGO'
 import ReactDOM from 'react-dom'
+import ForgotPassword from './ForgotPassword'
 import '../../css/form.css'
 
 export default class Login extends Component {
@@ -35,10 +36,13 @@ export default class Login extends Component {
     // This method renders normal user or ngo form as per user's selection
     renderForm(type){
         if(type==='Normal'){
-            ReactDOM.render(<NormalUser hideModal={this.handleClose}/>,this.loginForm.current);
+            ReactDOM.render(<NormalUser hideModal={this.handleClose} forgotPass={this.handleUserType} />,this.loginForm.current);
         }
         else if(type==='NGO') {
-            ReactDOM.render(<NGO hideModal={this.handleClose}/>,this.loginForm.current);
+            ReactDOM.render(<NGO hideModal={this.handleClose} forgotPass={this.handleUserType}/>,this.loginForm.current);
+        }
+        else if(type==='forgotPassword'){
+            ReactDOM.render(<ForgotPassword hideModal={this.handleClose}/>,this.loginForm.current);
         }
     }
 

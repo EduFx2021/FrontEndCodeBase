@@ -40,6 +40,11 @@ export default class NormalUser extends Component {
         })
     }
 
+    // This method is reponsible for rendering forgot password form 
+    onForgotPassHandler=()=> {
+        this.props.forgotPass('forgotPassword');
+    }
+
     handleFormSubmit=async function(){
         const pass= this.state.password;
         //validate Input
@@ -140,7 +145,8 @@ export default class NormalUser extends Component {
                     </div>
                     <div className="form-text mt-0 ms-5 ">
                         No account?<a className="signUpLink" href="/signup/ngo"> <span style={{color:'blue'}}>Sign Up!</span></a>
-                        <a className="signUpLink float-end me-5 mb-4" href="#">Forgot Password?</a>
+                        <a className="signUpLink float-end me-5 mb-4" href="#"
+                        onClick={this.onForgotPassHandler}>Forgot Password?</a>
                     </div>
                 </form>
                 
