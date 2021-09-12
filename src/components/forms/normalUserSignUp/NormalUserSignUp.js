@@ -3,6 +3,8 @@ import axios from 'axios';
 import '../../../css/form.css';
 import { v1 as uuidv1 } from 'uuid';
 import { Link } from "react-router-dom";
+import PhoneAuth from '../../PhoneAuth/PhoneAuth';
+
 
 export default class NormalUserSignUp extends Component {
     constructor(props){
@@ -17,20 +19,21 @@ export default class NormalUserSignUp extends Component {
         this.confirmPassError= React.createRef();
         this.signUpButtonRef= React.createRef();
         this.emailError= React.createRef();
+        
 
         this.state={
             email:'',
             username:'',
             password:'',
-            confirmpassword:''
+            confirmpassword:'',
+            phone:'',
+            isPhoneAuthenticated:false,
+            users:[]
         }
 
     }
     
-    handleInput(e){
-        e.target.classList.remove('is-invalid');
-    }
-    
+    //This method checks for events on form fields so as to remove invalid classes from these fields
     componentDidMount(){
         this.signUpButtonRef.current.disabled=true;
         this.usernameRef.current.addEventListener("keydown",this.handleInput);
@@ -38,7 +41,13 @@ export default class NormalUserSignUp extends Component {
         this.emailRef.current.addEventListener("keydown",this.handleInput);
         this.confirmPassRef.current.addEventListener("keydown",this.handleInput);
     }
+    
+    // This method removes 'is-invalid' class from validated fields
+    handleInput(e){
+        e.target.classList.remove('is-invalid');
+    }
 
+    // This method is responsible for changing states as per values entered in form fields
     onChangeHandler=(e)=>{
         this.setState({
             [e.target.name]:e.target.value
@@ -51,9 +60,11 @@ export default class NormalUserSignUp extends Component {
         }
     }
 
-    handleFormSubmit=()=>{
+    // This method is fired when the form is submitted
+    handleFormSubmit=async function(){
         const pass= this.state.password;
         let isValid=false;
+        let isRegistered=false;
         //validate email input
         var emailExpr = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
         if(!emailExpr.test(this.state.email)){
@@ -80,13 +91,13 @@ export default class NormalUserSignUp extends Component {
             isValid=true;
         }
         //Password Validation
-        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-        var minNumberofChars = 3;
-        var maxNumberofChars = 16;
+        var regularExpression = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
+        var minNumberofChars = 8;
+        var maxNumberofChars = 25;
 
         if(pass.length < minNumberofChars || pass.length > maxNumberofChars){
            this.passRef.current.classList.add('is-invalid');
-           this.passError.current.innerText = "Password Length must be greater than 3 and less than 16";
+           this.passError.current.innerText = "Password Length must be greater than 8 and less than 25";
            isValid=false;
         }
         else if(!regularExpression.test(pass)) {
@@ -94,41 +105,66 @@ export default class NormalUserSignUp extends Component {
             this.passError.current.innerText = "Password should contain atleast one number and one special character";
             isValid=false;
         }
-        else{
-            isValid=true;
-        }
-
-        if(this.confirmPassRef.current.value===this.passRef.current.value){
-            isValid=true;
-        }
-        else {
+        else if(this.confirmPassRef.current.value!==this.passRef.current.value){
             this.confirmPassRef.current.classList.add('is-invalid');
             this.confirmPassError.current.innerText = "Password doesn't match";
             isValid=false;
         }
+        else if (!this.state.isPhoneAuthenticated){
+            isValid=false;
+            alert("please enter and verify your phone number!!")
+        }
+        else{
+            isValid=true;
+        }
 
         if(isValid){
-            let users=[];
             //check user in database
-            axios.get('http://localhost:3000/users')
-            .then(response=>this.setState({
-                users: response.data
-            }));
-
-            const data = {
-                "id":uuidv1(),
-                "email":this.state.email,
-                "user":this.state.username,
-                "password":this.state.password
-            }
-
-            users.push(data);
+            const res=await axios.get('http://localhost:3000/users');
             
-            axios.post('http://localhost:3000/users',data)
-            .then(res=>{
-                alert('Signed Up');
+            this.setState({
+                users: res.data
             });
+
+            console.log(this.state.users);
+            this.state.users.forEach((user)=> {
+                console.log(user.phone === this.state.phone)
+                if(user.email === this.state.email ){
+                    alert("User Already registered please login");
+                    isRegistered=true;
+                }
             
+            })
+            
+            this.state.users.forEach((user)=> {
+                console.log(user.user===this.state.username);
+                if(user.user === this.state.username){
+                    alert("Username already there please change it and try again");
+                    isRegistered=true;
+                }
+            })
+
+            if(isRegistered===false){
+                const data = {
+                    "id":uuidv1(),
+                    "email":this.state.email,
+                    "user":this.state.username,
+                    "phone":this.state.phone,
+                    "password":this.state.password
+                }
+
+                this.setState({
+                    users:[...this.state.users,data]
+                });
+
+                axios.post('http://localhost:3000/users',data)
+                .then(res=>{
+                    alert('Signed Up');
+                });
+            }
+        }
+        else {
+            alert("Sign Up failed");
         }
 
         //clear input fields 
@@ -138,20 +174,35 @@ export default class NormalUserSignUp extends Component {
             password:'',
             confirmpassword:''
         });
+        this.checkboxref.current.checked=false;
 
+    }
+
+    //This method is to check if the Phone is authenticated
+    onPhoneAuthentication = (e) => {
+        this.setState({
+            isPhoneAuthenticated:true
+        });
+    }
+
+    // This method fetches phone number from PhoneAuth.js and updates phone state
+    onPhoneNumberVerification = (e,ph) => {
+        this.setState({
+            phone:ph
+        });
     }
 
     render() {
         return (
-            <div className="normalusersignup" id="normalSignUp" style={{height:"100vh"}}>
+            <div className="normalusersignup" id="normalSignUp" >
                 <div className="container" style={{marginLeft:"0px"}}>
                     <div className="row">
                         <div className="col-6">  
                         <Link to="/" type="button" className="btn btn-outline-dark btn-sm mt-2">Home</Link>  
                         </div>
                         <div className="col-6 " style={{marginLeft:"650px"}}>
-                            <h3 className="mt-5 ms-4 display-5 "style={{color:"#4d4d4d"}}>Individual User Sign Up</h3>
-
+                            <h3 className="mt-3 ms-4 display-5 "style={{color:"#4d4d4d"}}>Individual User Sign Up</h3>
+                            
                             <form>
                                 <div className="mb-1 ms-4 mt-2">
                                     <label htmlFor="normalUserEmail" className="form-label">Email address</label>
@@ -185,6 +236,12 @@ export default class NormalUserSignUp extends Component {
                             
                                     </div>
                                 </div>
+                            </form>
+                            
+                            <PhoneAuth isPhoneAuthenticated={this.onPhoneAuthentication} onPhoneNumberVerification={this.onPhoneNumberVerification}/>
+                            
+                            
+                            <form>    
                                 <div className="mb-2 ms-4">
                                     <label htmlFor="normalUserPassword " className="form-label">Password</label>
                                     <input 
@@ -229,7 +286,7 @@ export default class NormalUserSignUp extends Component {
                                 </div>
                                 <div className="d-grid gap-2 loginBtn">
                                     <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}
-                                    onClick={this.handleFormSubmit}
+                                    onClick={this.handleFormSubmit.bind(this)}
                                     ref={this.signUpButtonRef}
                                     >
                                     Sign Up

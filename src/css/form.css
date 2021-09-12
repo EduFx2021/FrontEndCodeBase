@@ -1,3 +1,5 @@
+/* This CSS file is for Login and Sign Up Forms */
+
 .modal-body {
   padding: 0rem !important;
 }
@@ -109,7 +111,7 @@
 }
 
 .headerSignup {
-  margin-left: 140px;
+  margin-left: 60px;
 }
 
 .normalusersignup {
@@ -133,6 +135,10 @@
   margin-left: 25px;
 }
 
+.normalusersignup .phoneNumber {
+  width: 68%;
+}
+
 .ngosignup {
   background-image: url('../images/Ngo.svg');
   background-color:white;
@@ -148,4 +154,13 @@
 .ngosignup .loginBtn {
   width: 80%;
   margin-left: 25px;
+}
+
+.signup .footBorder {
+  background-color: #4285f4 !important;
+}
+
+
+.forgotPassword .form__field {
+  margin-left: 0px;
 }

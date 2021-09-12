@@ -1,0 +1,62 @@
+/* This CSS file is for Footer.js */
+
+footer {
+    padding-bottom:30px;
+    height:auto;
+    bottom:0;
+    background-color:#333333;
+    color:white;
+  }
+  
+  #content{
+    margin:0 75px 0 75px;
+    padding:25px 7.5px 25px 7.5px;
+  }
+  #content img{
+    float:left;
+  }
+  #content b{
+    display:block;
+    margin-left:90px;
+    margin-top:20px;
+    font-weight: 600;
+    font-size:xx-large;
+    font-family: 'Roboto Condensed';
+  }
+  .BnW{
+    border-radius:50%;
+    width:80px;
+  }
+  
+  .footer-right{
+    float:right;
+    font-family:'Roboto Condensed';
+    color:#c4c4c4;
+  }
+  .footer-right a{
+    margin-left:10px;
+  }
+  
+  .footer .fab{
+    color:#c4c4c4;
+  }
+  .footer .fab:hover{
+    transform: scale(1.4);
+    color:white;
+  }
+  .footBorder{
+      border-width: 1px;
+    width:100%;
+    background-color:green;
+  }
+  #contacts a {
+    font-size: 12px;
+    font-family:'Roboto';
+    color: #ffffff;
+    text-decoration: none;
+    font-weight:500;
+  }
+  #contacts a:hover{
+    color:#00adef;
+    font-size:12px;
+  }

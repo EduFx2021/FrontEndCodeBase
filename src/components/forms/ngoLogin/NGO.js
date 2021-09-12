@@ -17,6 +17,8 @@ export default class NormalUser extends Component {
         }
     }
 
+    // These methods is for adding is-invalid class to the username field if it's not valid
+
     handleUsername(e){
         e.target.classList.remove('is-invalid');
         e.target.classList.add('is-valid');
@@ -25,10 +27,11 @@ export default class NormalUser extends Component {
     handlePassword(e){
         e.target.classList.remove('is-invalid');
     }
+
+    //This method checks for events on password and username field so as to remove invalid classes from username and password fields
     componentDidMount(){
         this.usernameRef.current.addEventListener("keydown",this.handleUsername);
-        this.passRef.current.addEventListener("keydown",this.handlePassword);
-        
+        this.passRef.current.addEventListener("keydown",this.handlePassword);    
     }
 
     onChangeHandler=(e)=>{
@@ -37,7 +40,12 @@ export default class NormalUser extends Component {
         })
     }
 
-    handleFormSubmit=()=>{
+    // This method is reponsible for rendering forgot password form 
+    onForgotPassHandler=()=> {
+        this.props.forgotPass('forgotPassword');
+    }
+
+    handleFormSubmit=async function(){
         const pass= this.state.password;
         //validate Input
         if(this.state.username===''){
@@ -66,13 +74,13 @@ export default class NormalUser extends Component {
 
 
         //check user in database
-        axios.get('http://localhost:3000/ngos')
-        .then(response=>this.setState({
+        const response = await axios.get('http://localhost:3000/ngos');
+        this.setState({
             users: response.data
-        }));
+        });
 
         this.state.users.forEach((x)=>{
-            console.log(x);
+           
             if(x.user === this.state.username && x.password===this.state.password){
                 this.setState({
                     isAuthenticated:true
@@ -130,14 +138,15 @@ export default class NormalUser extends Component {
 
                     <div className="d-grid gap-2 loginBtn">
                         <button type="button" className="btn mt-2 mb-3 fw-bold " style={{backgroundColor:'#00adef' , color:'white' }}
-                        onClick={this.handleFormSubmit}
+                        onClick={this.handleFormSubmit.bind(this)}
                         >
                                 Login
                         </button>
                     </div>
                     <div className="form-text mt-0 ms-5 ">
                         No account?<a className="signUpLink" href="/signup/ngo"> <span style={{color:'blue'}}>Sign Up!</span></a>
-                        <a className="signUpLink float-end me-5 mb-4" href="#">Forgot Password?</a>
+                        <a className="signUpLink float-end me-5 mb-4" href="#"
+                        onClick={this.onForgotPassHandler}>Forgot Password?</a>
                     </div>
                 </form>
                 

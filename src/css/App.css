@@ -1,28 +1,5 @@
+/* This CSS File is Applied to App.js and all child components  */
 
-.navbar-brand {
-    font-size:23px !important;
-}
-.nav-item {
-    color: white !important;
-    font-size: 18px !important;
-}
-.nav-item:hover {
-    color: white!important;
-    background-color: #00adef;
-    border-radius: 15px;
-}
-.App {
-    background-image: url('../images/bg.png')
-}
-h1 {
-    color: #66FCF1;
-    margin-top: 90px;
-    font-family: 'Anton', sans-serif;
-}
-
-.display-4 {
-    font-size: 8rem !important;
-}
 .lead {
     color: white!important;
 }
