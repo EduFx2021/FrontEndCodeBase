@@ -21,7 +21,6 @@ export default class NormalUser extends Component {
 
     handleUsername(e){
         e.target.classList.remove('is-invalid');
-        e.target.classList.add('is-valid');
     }
 
     handlePassword(e){
@@ -42,7 +41,7 @@ export default class NormalUser extends Component {
 
     // This method is reponsible for rendering forgot password form 
     onForgotPassHandler=()=> {
-        this.props.forgotPass('forgotPassword');
+        this.props.forgotPass('forgotPasswordForNGO');
     }
 
     handleFormSubmit=async function(){

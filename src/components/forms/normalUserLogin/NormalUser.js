@@ -92,7 +92,7 @@ export default class NormalUser extends Component {
 
     // This method is reponsible for rendering forgot password form 
     onForgotPassHandler=()=> {
-        this.props.forgotPass('forgotPassword');
+        this.props.forgotPass('forgotPasswordForNormal');
     }
 
     // This method is fired when the form is submitted

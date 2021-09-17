@@ -26,9 +26,10 @@ export default class PhoneAuth extends Component {
 
     onSignInSubmit = (e) => {
         e.preventDefault();
-        if(this.state.phone==='' || this.state.phone.length<10){
+        if(this.state.phone==='' || this.state.phone.length<10 ){
             this.phoneRef.current.classList.add("is-invalid");
         }
+        
         else {
 
             if(this.phoneRef.current.classList.contains('is-invalid')){

@@ -56,7 +56,7 @@ export default class App extends Component{
     return (
       <Router>
         <div className="App">
-          {this.state.user?<Redirect to="/private"/>:<Redirect to="/"/>}
+          {this.state.user?<Redirect to="/private"/>:null}
           <Login toggleModal={this.state.displayModal} showModal={this.showModal}/>
           {/* {this.state.displaySignUp?<SignUp/>:null} */}
           <Switch>
@@ -70,10 +70,9 @@ export default class App extends Component{
             />
             
             <Route exact path="/signup" render={(props)=>(<SignUp {...props} showModal={this.showModal}/>)}/>
-            <Route exact path="/private" component={ProblemSearch}></Route>
-          
             {/* <Route exact path="/progress" component={Progress}/> */}
             <Route exact path="/private" component={ProblemSearch}></Route>
+
           </Switch>
         </div>
       </Router>

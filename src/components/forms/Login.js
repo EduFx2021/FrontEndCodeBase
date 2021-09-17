@@ -33,16 +33,31 @@ export default class Login extends Component {
         });
     }
 
+    handleForgotForNGOUser=()=> {
+        this.setState({
+            forgotPassFor:'NGO'
+        });
+    }
+
+    handleForgotForNormalUser=()=>{
+        this.setState({
+            forgotPassFor:'Normal'
+        });
+    }
+
     // This method renders normal user or ngo form as per user's selection
     renderForm(type){
         if(type==='Normal'){
-            ReactDOM.render(<NormalUser hideModal={this.handleClose} forgotPass={this.handleUserType} />,this.loginForm.current);
+            ReactDOM.render(<NormalUser hideModal={this.handleClose} forgotPass={this.handleUserType} forgotForNormal={this.handleForgotForNormalUser} />,this.loginForm.current);
         }
         else if(type==='NGO') {
-            ReactDOM.render(<NGO hideModal={this.handleClose} forgotPass={this.handleUserType}/>,this.loginForm.current);
+            ReactDOM.render(<NGO hideModal={this.handleClose} forgotPass={this.handleUserType} forgotForNGO={this.handleForgotForNGOUser}/>,this.loginForm.current);
         }
-        else if(type==='forgotPassword'){
-            ReactDOM.render(<ForgotPassword hideModal={this.handleClose}/>,this.loginForm.current);
+        else if(type==='forgotPasswordForNormal'){
+            ReactDOM.render(<ForgotPassword hideModal={this.handleClose} forgotPassFor='users'/>,this.loginForm.current);
+        }
+        else if(type==='forgotPasswordForNGO'){
+            ReactDOM.render(<ForgotPassword hideModal={this.handleClose} forgotPassFor='ngos'/>,this.loginForm.current);
         }
     }
 

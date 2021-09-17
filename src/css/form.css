@@ -164,3 +164,6 @@
 .forgotPassword .form__field {
   margin-left: 0px;
 }
+.forgotPassword .loginBtn {
+  width: 30%;
+}
