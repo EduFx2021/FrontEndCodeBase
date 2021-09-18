@@ -4,6 +4,7 @@ import '../../../css/form.css';
 import { v1 as uuidv1 } from 'uuid';
 import { Link } from "react-router-dom";
 import PhoneAuth from '../../PhoneAuth/PhoneAuth';
+import { OverlayTrigger,Tooltip } from 'react-bootstrap';
 
 
 export default class NormalUserSignUp extends Component {
@@ -290,6 +291,19 @@ export default class NormalUserSignUp extends Component {
         });
     }
 
+    // These methods renders tooltip on username and password fields containing the info
+    renderPassTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props} >
+          Password length must be greater than 8 and less than 25 and must contain A Capital Alphabet, a number and a special character.
+        </Tooltip>
+    );
+
+    renderUsernameTooltip=(props)=>(
+        <Tooltip id="button-tooltip" {...props} >
+          Username length must be greater than 3 and less than 15
+        </Tooltip>
+    );
+
     render() {
         return (
             <div className="normalusersignup" id="normalSignUp" >
@@ -320,8 +334,13 @@ export default class NormalUserSignUp extends Component {
                                 </div>
                                 <div className="mb-1 ms-4 mt-2">
                                     <label htmlFor="normalUsername" className="form-label d-block">Username</label>
+                                    <OverlayTrigger
+                                        placement="bottom"
+                                        delay={{ show: 200, hide: 200 }}
+                                        overlay={this.renderUsernameTooltip}
+                                    >
                                     <input 
-                                        type="email" 
+                                        type="text" 
                                         className="form-control usernameField form__field d-inline"
                                         id="normalUsername"
                                         value={this.state.username}
@@ -329,6 +348,7 @@ export default class NormalUserSignUp extends Component {
                                         name="username"
                                         ref={this.usernameRef}
                                     />
+                                    </OverlayTrigger>
                                     <button 
                                         className="btn btn-sm btn-outline-dark ms-3 mt-1 verifyBtn "
                                         type="submit"
@@ -349,18 +369,25 @@ export default class NormalUserSignUp extends Component {
                             <form>    
                                 <div className="mb-2 ms-4">
                                     <label htmlFor="normalUserPassword " className="form-label">Password</label>
-                                    <input 
-                                        type="password" 
-                                        className="form-control form__field" 
-                                        id="normalUserPassword"
-                                        name="password"
-                                        value={this.state.password}
-                                        onChange={this.onChangeHandler}
-                                        ref={this.passRef}
-                                    />
+                                    <OverlayTrigger
+                                        placement="bottom"
+                                        delay={{ show: 200, hide: 200 }}
+                                        overlay={this.renderPassTooltip}
+                                    >                                    
+                                        <input 
+                                            type="password" 
+                                            className="form-control form__field" 
+                                            id="normalUserPassword"
+                                            name="password"
+                                            value={this.state.password}
+                                            onChange={this.onChangeHandler}
+                                            ref={this.passRef}
+                                        />
+                                    </OverlayTrigger>
                                     <div className="invalid-feedback" ref={this.passError}>
-                            
+                                
                                     </div>
+                                    
                                 </div>
                                 <div className="mb-2 ms-4">
                                     <label htmlFor="normalUserPasswordConfirm " className="form-label">Confirm Password</label>

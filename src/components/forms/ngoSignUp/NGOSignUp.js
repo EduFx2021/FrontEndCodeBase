@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../../../css/form.css';
 import { v1 as uuidv1 } from 'uuid';
 import { Link } from "react-router-dom";
+import { OverlayTrigger,Tooltip } from 'react-bootstrap';
 
 export default class NGOSignUp extends Component {
     constructor(props){
@@ -209,6 +210,14 @@ export default class NGOSignUp extends Component {
         });
         this.checkboxref.current.checked=false;
     }
+
+    // This method renders tooltip on password field containing the info
+    renderPassTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+          Password length must be greater than 8 and less than 25 and must contain A Capital Alphabet, a number and a special character.
+        </Tooltip>
+    );
+
     render() {
         return (
             <div className="ngosignup" id="ngoSignUp" >
@@ -273,15 +282,21 @@ export default class NGOSignUp extends Component {
 
                                 <div className="mb-2 ms-4">
                                     <label htmlFor="normalUserPassword " className="form-label">Password</label>
-                                    <input 
-                                        type="password" 
-                                        className="form-control form__field" 
-                                        id="normalUserPassword"
-                                        name="password"
-                                        value={this.state.password}
-                                        onChange={this.onChangeHandler}
-                                        ref={this.passRef}
-                                    />
+                                    <OverlayTrigger
+                                        placement="bottom"
+                                        delay={{ show: 200, hide: 200 }}
+                                        overlay={this.renderPassTooltip}
+                                    >
+                                        <input 
+                                            type="password" 
+                                            className="form-control form__field" 
+                                            id="normalUserPassword"
+                                            name="password"
+                                            value={this.state.password}
+                                            onChange={this.onChangeHandler}
+                                            ref={this.passRef}
+                                        />
+                                    </OverlayTrigger>
                                     <div className="invalid-feedback" ref={this.passError}>
                             
                                     </div>
