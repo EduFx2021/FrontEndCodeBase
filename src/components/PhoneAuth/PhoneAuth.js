@@ -125,7 +125,7 @@ export default class PhoneAuth extends Component {
                             type="submit"
                             ref={this.verifyBtnRef}
                         >
-                            verify
+                            Verify
                         </button>
                         <div className="invalid-feedback " ref={this.phoneError}>
                             Please Enter a valid phone number

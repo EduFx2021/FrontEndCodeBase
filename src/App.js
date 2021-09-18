@@ -56,7 +56,7 @@ export default class App extends Component{
     return (
       <Router>
         <div className="App">
-          {this.state.user?<Redirect to="/private"/>:null}
+          {/* {this.state.user?<Redirect to="/private"/>:null} */}
           <Login toggleModal={this.state.displayModal} showModal={this.showModal}/>
           {/* {this.state.displaySignUp?<SignUp/>:null} */}
           <Switch>

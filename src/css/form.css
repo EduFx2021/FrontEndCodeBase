@@ -135,8 +135,8 @@
   margin-left: 25px;
 }
 
-.normalusersignup .phoneNumber {
-  width: 68%;
+.normalusersignup .phoneNumber, .usernameField  {
+  width: 68% !important;
 }
 
 .ngosignup {

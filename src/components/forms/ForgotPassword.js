@@ -24,11 +24,21 @@ export default class ForgotPassword extends Component {
             phone:'',
             newPass:'',
             confirmPass:'',
-            isPhoneAuthenticated:false
+            isPhoneAuthenticated:false,
+            isEmailRegistered:false
         };
     }
 
-    
+    componentDidMount=()=>{
+        this.emailRef.current.addEventListener("keydown",this.handleInput);
+        this.emailRef.current.addEventListener("focusout",this.checkEmailAvailability.bind(this));
+    }
+
+    // This method removes 'is-invalid' class from validated fields
+    handleInput(e){
+        e.target.classList.remove('is-invalid');
+        e.target.classList.remove('is-valid');
+    }
 
     // This method is responsible for changing states as per values entered in form fields
     onChangeHandler=(e)=>{
@@ -51,6 +61,53 @@ export default class ForgotPassword extends Component {
         });
     }
 
+    checkEmailAvailability= async function(){
+        let emailCheck=false;
+        let emailregistered = false; //temp var to check email registered
+
+        //validate email input
+        var emailExpr = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
+        if(!emailExpr.test(this.state.email)){
+            this.emailRef.current.classList.add('is-invalid');
+            this.emailError.current.innerText="Please write the correct email format user@xyz.com";
+            emailCheck=false;
+        }
+        else {
+            emailCheck=true;
+        }
+
+        if(emailCheck){
+            const res=await axios.get(`http://localhost:3000/${this.props.forgotPassFor}`);
+
+            this.setState({
+                users: res.data
+            });
+
+            this.state.users.forEach((user)=> {
+                
+                if(user.email === this.state.email){
+                    
+                    this.setState({
+                        isEmailRegistered:false
+                    });
+                    emailregistered=true;
+                }
+                
+            });
+            
+            console.log(emailregistered)
+            if(emailregistered){
+                this.setState({
+                    isEmailRegistered:true
+                });
+            } 
+            else{
+                this.emailRef.current.classList.add('is-invalid');
+                this.emailError.current.innerText="Email is not registered";    
+            }
+        }
+    }
+
     // This method is fired when the form is submitted
     handleFormSubmit=async function(){
         const pass= this.state.password;
@@ -58,10 +115,8 @@ export default class ForgotPassword extends Component {
         let isRegistered=false;
         
         //validate email input
-        var emailExpr = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
-        if(!emailExpr.test(this.state.email)){
-            this.emailRef.current.classList.add('is-invalid');
-            this.emailError.current.innerText="Please write the correct email format user@xyz.com";
+        //isvalid is true if the email is not available that is email is already registered and since here we are resetting password only for registered users this idf
+        if(this.state.isEmailAvailable){
             isValid=false;
         }
         else {
@@ -112,9 +167,7 @@ export default class ForgotPassword extends Component {
                         username:user.user
                     });
                 }
-                else {
-                    alert('user email or password not registered please check!')
-                }
+                
             });
             
 
@@ -132,7 +185,7 @@ export default class ForgotPassword extends Component {
                 alert("updated successfully")
             }
             else{
-                console.log('user not registered');
+                alert('user not registered, please sign up');
             }
         }
         else {
@@ -176,7 +229,7 @@ export default class ForgotPassword extends Component {
 
                 {this.state.isPhoneAuthenticated?
                 <div>
-                    <div className="mb-2 ms-5">
+                    <div className="mb-2 ms-5"> 
                         <label htmlFor="userPassword " className="form-label">New Password</label>
                         <input 
                             type="password" 

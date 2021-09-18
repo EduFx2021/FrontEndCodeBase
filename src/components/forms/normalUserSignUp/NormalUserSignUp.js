@@ -28,7 +28,9 @@ export default class NormalUserSignUp extends Component {
             confirmpassword:'',
             phone:'',
             isPhoneAuthenticated:false,
-            users:[]
+            users:[],
+            isUserNameAvailable:false,
+            isEmailAvailable:false
         }
 
     }
@@ -40,11 +42,14 @@ export default class NormalUserSignUp extends Component {
         this.passRef.current.addEventListener("keydown",this.handleInput);
         this.emailRef.current.addEventListener("keydown",this.handleInput);
         this.confirmPassRef.current.addEventListener("keydown",this.handleInput);
+
+        this.emailRef.current.addEventListener("focusout",this.checkEmailAvailability.bind(this));
     }
     
     // This method removes 'is-invalid' class from validated fields
     handleInput(e){
         e.target.classList.remove('is-invalid');
+        e.target.classList.remove('is-valid');
     }
 
     // This method is responsible for changing states as per values entered in form fields
@@ -60,35 +65,126 @@ export default class NormalUserSignUp extends Component {
         }
     }
 
-    // This method is fired when the form is submitted
-    handleFormSubmit=async function(){
-        const pass= this.state.password;
-        let isValid=false;
-        let isRegistered=false;
+    checkUsernameAvailability=async function(e){
+        e.preventDefault();
+        let usernameCheck=false;
+        let usernameAvail = true; //temp var to check username availability
+        
+        //validate username input
+        if(this.state.username===''){
+            this.usernameRef.current.classList.add('is-invalid');
+            this.usernameError.current.innerText="Username field can't be empty!";
+            usernameCheck=false;
+        }
+        else if(this.state.username.length<3 || this.state.username.length>15){
+            this.usernameRef.current.classList.add('is-invalid');
+            this.usernameError.current.innerText="Username Length must be greater than 3 and less than 15";
+            usernameCheck=false;
+        }
+        else {
+            usernameCheck=true;
+            this.setState({
+                usernameAvail:true
+            })
+        }
+
+        if(usernameCheck){
+
+            const res=await axios.get('http://localhost:3000/users');
+            this.setState({
+                users: res.data
+            });
+
+            this.state.users.forEach((user)=> {
+                if(user.user === this.state.username){
+                    this.usernameRef.current.classList.add('is-invalid');
+                    this.usernameError.current.innerText="Username is not available";
+                    this.setState({
+                        isUserNameAvailable:false
+                    });
+                    usernameAvail=false;
+                }
+            });
+
+        }   
+        if(usernameAvail!==false) {
+            this.usernameRef.current.classList.add('is-valid');
+            this.usernameError.current.innerText="Username is available";
+            this.setState({
+                isUserNameAvailable:true
+            });
+        }
+    }
+
+    checkEmailAvailability= async function(){
+        let emailCheck=false;
+        let emailAvail = true; //temp var to check email availability
         //validate email input
         var emailExpr = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
         if(!emailExpr.test(this.state.email)){
             this.emailRef.current.classList.add('is-invalid');
             this.emailError.current.innerText="Please write the correct email format user@xyz.com";
-            isValid=false;
+            emailCheck=false;
         }
         else {
-            isValid=true;
+            emailCheck=true;
+        }
+
+        if(emailCheck){
+            const res=await axios.get('http://localhost:3000/users');
+
+            this.setState({
+                users: res.data
+            });
+
+            this.state.users.forEach((user)=> {
+                
+                if(user.email === this.state.email){
+                    this.emailRef.current.classList.add('is-invalid');
+                    this.emailError.current.innerText="Email is already registered please login";
+                    this.setState({
+                        isEmailAvailable:false
+                    });
+                    emailAvail=false;
+                }
+                
+            });
+
+            if(emailAvail!==false){
+                this.setState({
+                    isEmailAvailable:true
+                });
+            }
+        }
+    }
+
+    // This method is fired when the form is submitted
+    handleFormSubmit=async function(){
+        const pass= this.state.password;
+        let isEmailValid=false;
+        let isPassValid=false;
+        let isUsernameValid=false;
+        let isPhoneValid=false;
+        let isRegistered=false;
+
+        // Checking if email is available at the time of submitting
+        if(this.state.isEmailAvailable && this.state.email!==''){
+            isEmailValid=true;
+        }
+        else{
+            this.emailRef.current.classList.add('is-invalid');
+            this.emailError.current.innerText="Please enter an email";
+            isEmailValid=false;
         }
 
         //validate Input
-        if(this.state.username===''){
-            this.usernameRef.current.classList.add('is-invalid');
-            this.usernameError.current.innerText="Username field can't be empty!";
-            isValid=false;
+        if(this.state.isUserNameAvailable && this.state.username!==''){
+            isUsernameValid=true;
         }
-        else if(this.state.username.length<3 || this.state.username.length>15){
+        else{
+            isUsernameValid=false;
             this.usernameRef.current.classList.add('is-invalid');
-            this.usernameError.current.innerText="Username Length must be greater than 3 and less than 15";
-            isValid=false;
-        }
-        else {
-            isValid=true;
+            this.usernameError.current.innerText="Please enter a username";
         }
         //Password Validation
         var regularExpression = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
@@ -98,27 +194,33 @@ export default class NormalUserSignUp extends Component {
         if(pass.length < minNumberofChars || pass.length > maxNumberofChars){
            this.passRef.current.classList.add('is-invalid');
            this.passError.current.innerText = "Password Length must be greater than 8 and less than 25";
-           isValid=false;
+           isPassValid=false;
         }
         else if(!regularExpression.test(pass)) {
             this.passRef.current.classList.add('is-invalid');
             this.passError.current.innerText = "Password should contain atleast one number and one special character";
-            isValid=false;
+            isPassValid=false;
         }
         else if(this.confirmPassRef.current.value!==this.passRef.current.value){
             this.confirmPassRef.current.classList.add('is-invalid');
             this.confirmPassError.current.innerText = "Password doesn't match";
-            isValid=false;
+            isPassValid=false;
         }
-        else if (!this.state.isPhoneAuthenticated){
-            isValid=false;
-            alert("please enter and verify your phone number!!")
-        }
+         
         else{
-            isValid=true;
+            isPassValid=true;
         }
 
-        if(isValid){
+        if (!this.state.isPhoneAuthenticated){
+            isPhoneValid=false;
+            alert("please enter and verify your phone number!!")
+        }
+        else {
+            isPhoneValid=true;
+        }
+
+
+        if(isEmailValid && isPhoneValid && isUsernameValid && isPassValid){
             //check user in database
             const res=await axios.get('http://localhost:3000/users');
             
@@ -126,23 +228,19 @@ export default class NormalUserSignUp extends Component {
                 users: res.data
             });
 
-            console.log(this.state.users);
             this.state.users.forEach((user)=> {
-                console.log(user.phone === this.state.phone)
+                
                 if(user.email === this.state.email ){
                     alert("User Already registered please login");
                     isRegistered=true;
                 }
             
-            })
+            });
             
-            this.state.users.forEach((user)=> {
-                console.log(user.user===this.state.username);
-                if(user.user === this.state.username){
-                    alert("Username already there please change it and try again");
-                    isRegistered=true;
-                }
-            })
+            if(!this.state.isUserNameAvailable){
+                alert("Please check first if the username is available");
+                isRegistered=true;
+            }
 
             if(isRegistered===false){
                 const data = {
@@ -221,17 +319,24 @@ export default class NormalUserSignUp extends Component {
                                     </div>
                                 </div>
                                 <div className="mb-1 ms-4 mt-2">
-                                    <label htmlFor="normalUsername" className="form-label">Username</label>
+                                    <label htmlFor="normalUsername" className="form-label d-block">Username</label>
                                     <input 
                                         type="email" 
-                                        className="form-control form__field"
+                                        className="form-control usernameField form__field d-inline"
                                         id="normalUsername"
                                         value={this.state.username}
                                         onChange={this.onChangeHandler}
                                         name="username"
                                         ref={this.usernameRef}
                                     />
-                                    
+                                    <button 
+                                        className="btn btn-sm btn-outline-dark ms-3 mt-1 verifyBtn "
+                                        type="submit"
+                                        ref={this.verifyBtnRef}
+                                        onClick={this.checkUsernameAvailability.bind(this)}
+                                    >
+                                        Check
+                                    </button>
                                     <div className="invalid-feedback " ref={this.usernameError}>
                             
                                     </div>
