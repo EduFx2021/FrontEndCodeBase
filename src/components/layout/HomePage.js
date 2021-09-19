@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../../css/Home.css';
 import yamini from '../../images/founders/Yamini.jpg';
 import anshuman from '../../images/founders/Anshuman.jpg';
@@ -11,16 +11,48 @@ import razali from '../../images/founders/Razali.png';
 import yashad from '../../images/founders/Yashad.jpg';
 import videoset from '../../videos/video_set.mp4'
 
-export default function HomePage() {
-    return (
-        <>
+
+export default class HomePage extends Component {
+    constructor(props){
+        super(props);
+        this.menuRef=React.createRef();
+        this.navRef=React.createRef();
+        this.menuBgRef=React.createRef();
+        
+    }
+    
+    onClickMenu=()=>{
+        this.menuRef.current.classList.toggle("change");
+        this.navRef.current.classList.toggle("change");
+        this.menuBgRef.current.classList.toggle("change-bg");
+    }
+
+    render() {
+        return (
             <div>
+            
             <div className="bg-image">
+                <div className="menu-bar">
+                    <div id="menu" className="menu float-end me-3 " onClick={this.onClickMenu} ref={this.menuRef}>
+                        <div id="bar1" className="bar"></div>
+                        <div id="bar2" className="bar"></div>
+                        <div id="bar3" className="bar"></div>
+                    </div>
+                    <ul className="nav float-end " id="nav" ref={this.navRef}>
+                        <li><a href="#credentials">Our mission</a></li>
+                        <li><a href="#video">About</a></li>
+                        <li><a href="#stories">Success Stories</a></li>
+                        <li><a href="#founder">Founders</a></li>
+                        <li><a href="#footer">Footer</a></li>
+                    </ul>
+                </div>
+                <div className="menu-bg" id="menu-bg" ref={this.menuBgRef}></div>
+                
                 <div id="credentials"> 
-                <h1> Mission and Vision</h1>
+                    <h1> Mission and Vision</h1>
                 </div>
                 <div className="mission"> 
-                <p style={{color: 'white'}}>Edu-FX mission is to support United Nations Sustainable Development Goal 4.7 - Quality Education, Education for Sustainable Development and Global Citizenship Education. 
+                    <p style={{color: 'white'}}>Edu-FX mission is to support United Nations Sustainable Development Goal 4.7 - Quality Education, Education for Sustainable Development and Global Citizenship Education. 
                 </p>
                 </div>
                 <div className="mission"> 
@@ -193,6 +225,6 @@ export default function HomePage() {
                 </div>
             </div>
             </div>
-        </>
-    )
+        )
+    }
 }
