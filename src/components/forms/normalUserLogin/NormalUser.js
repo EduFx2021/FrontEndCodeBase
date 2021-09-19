@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { getAuth, signInWithPopup,GoogleAuthProvider,FacebookAuthProvider } from "firebase/auth";
-import {Redirect} from 'react-router';
+import { Alert } from 'react-bootstrap';
 
 
 export default class NormalUser extends Component {
@@ -19,6 +19,9 @@ export default class NormalUser extends Component {
             users:[],
             isCorrect:false,
             isAuthenticated:false,
+            showAlert:false,
+            alertVarient:'',
+            alertText:'',
             isLoggedInWithSocial:false
         }
     }
@@ -40,9 +43,8 @@ export default class NormalUser extends Component {
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            // ...
 
-            console.log("Logged in successfully");
+            this.showAlert("Logged in with Google",'success');
             window.location.reload();
             
         }).catch((error) => {
@@ -59,8 +61,7 @@ export default class NormalUser extends Component {
         .then((result) => {
             // The signed-in user info.
             const user = result.user;
-
-            console.log("Logged in with Facebook");
+            this.showAlert("Logged in with Facebook",'success');
             window.location.reload();
         })
         .catch((error) => {
@@ -98,49 +99,30 @@ export default class NormalUser extends Component {
     // This method is fired when the form is submitted
     handleFormSubmit=async function(){
         const pass= this.state.password;
-        this.setState({
-            isCorrect:false
-        });
+        let isUsernameCorrect=false;
+        let isPasswordCorrect=false;
+        
         //validate Input
         if(this.state.username===''){
             this.usernameRef.current.classList.add('is-invalid');
             this.usernameError.current.innerText="Username field can't be empty!";
-            this.setState({
-                isCorrect:false
-            });
-        }
-        else if(this.state.username.length<3 || this.state.username.length>15){
-            this.usernameRef.current.classList.add('is-invalid');
-            this.usernameError.current.innerText="Username Length must be greater than 3 and less than 15";
-            this.setState({
-                isCorrect:false
-            });
+            isUsernameCorrect=false;
         }
         else {
-            this.setState({
-                isCorrect:true
-            })
+            isUsernameCorrect=true;
         }
-        //Password Validation
-        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-        var minNumberofChars = 3;
-        var maxNumberofChars = 16;
 
         if(pass===''){
             this.passRef.current.classList.add('is-invalid');
             this.passError.current.innerText = "Please Enter your Password";
-            this.setState({
-                isCorrect:false
-            });
+            isPasswordCorrect=false;
         }
         else{
-            this.setState({
-                isCorrect:true
-            });
+            isPasswordCorrect=true;
         }
 
 
-        if(this.state.isCorrect){
+        if(isUsernameCorrect&&isPasswordCorrect){
             //check user in database
             const response = await axios.get('http://localhost:3000/users');
             this.setState({
@@ -149,29 +131,58 @@ export default class NormalUser extends Component {
 
             this.state.users.forEach((x)=>{
                 
-                if( (x.user === this.state.username||x.email===this.state.email) && x.password===this.state.password){
+                if( (x.user === this.state.username||x.email===this.state.username) && x.password===this.state.password){
                     this.setState({
                         isAuthenticated:true
-                    })
+                    });
                 }
             })
 
             if(this.state.isAuthenticated){
-                alert('Logged in Successfully');
+                this.showAlert("Logged in Successfully",'success');
+                this.setState({
+                    username:'',
+                    password:''
+                });
             }
             else {
-                alert('User not registered');
+                this.showAlert("You have entered wrong username or password, please check the credentials and try again",'danger');
             }
         }
+        else {
+            this.showAlert("Login Failed!",'danger');
+        }
+    }
+
+    showAlert=(msg,varient)=>{
+        this.setState({
+            showAlert: true,
+            alertVarient:varient,
+            alertText:msg
+        });
+
+        setTimeout(() => {
+            this.setState({
+                showAlert: false,
+                alertText:''
+            })
+        }, 2000)
     }
 
     render() {
         return (
             <div>
                 <div>
+                    {this.state.showAlert?
+                    <Alert 
+                        variant={this.state.alertVarient} 
+                        className="loginAlert ms-5"
+                    >   
+                        {this.state.alertText}
+                    </Alert>
+                    :null}
                     <h4 className="loginTitle mb-4">Login to Your Account</h4>
                     <form>
-                    
                         <div className="mb-3 form">
                             <label htmlFor="username" className="form-label form__label">USERNAME / EMAIL </label>
                             <input

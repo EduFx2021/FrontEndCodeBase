@@ -49,10 +49,10 @@ export default class PhoneAuth extends Component {
                 .then((confirmationResult) => {
                     
                     window.confirmationResult = confirmationResult;
-                    console.log('otp sent');
+                    this.props.showPhoneAlerts("Otp Sent",'success');
 
                 }).catch((error) => {
-                    console.log("otp send error");
+                    this.props.showPhoneAlerts("Error Sending Otp",'danger');
                 });
         }
     }

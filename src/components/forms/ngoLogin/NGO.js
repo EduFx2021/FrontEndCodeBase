@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Alert } from 'react-bootstrap';
+
 export default class NormalUser extends Component {
     constructor(props){
         super(props);
@@ -13,6 +15,9 @@ export default class NormalUser extends Component {
             username:'',
             password:'',
             users:[],
+            showAlert:false,
+            alertVarient:'',
+            alertText:'',
             isAuthenticated:false
         }
     }
@@ -46,59 +51,87 @@ export default class NormalUser extends Component {
 
     handleFormSubmit=async function(){
         const pass= this.state.password;
+        let isUsernameCorrect=false;
+        let isPasswordCorrect=false;
+
         //validate Input
         if(this.state.username===''){
             this.usernameRef.current.classList.add('is-invalid');
             this.usernameError.current.innerText="Username field can't be empty!";
+            isUsernameCorrect=false;
         }
-        else if(this.state.username.length<3 || this.state.username.length>15){
-            this.usernameRef.current.classList.add('is-invalid');
-            this.usernameError.current.innerText="Username Length must be greater than 3 and less than 15";
+        else{
+            isUsernameCorrect=true;
         }
-
         //Password Validation
         if(pass===''){
             this.passRef.current.classList.add('is-invalid');
             this.passError.current.innerText = "Please Enter your Password";
-            this.setState({
-                isCorrect:false
-            });
+            isPasswordCorrect=false;
         }
         else{
-            this.setState({
-                isCorrect:true
-            });
+            isPasswordCorrect=true;
         }
 
 
+        if(isUsernameCorrect && isPasswordCorrect){
+            //check user in database
+            const response = await axios.get('http://localhost:3000/ngos');
+            this.setState({
+                users: response.data
+            });
 
-        //check user in database
-        const response = await axios.get('http://localhost:3000/ngos');
-        this.setState({
-            users: response.data
-        });
+            this.state.users.forEach((x)=>{
+            
+                if((x.user === this.state.username||x.email===this.state.username) && x.password===this.state.password){
+                    this.setState({
+                        isAuthenticated:true
+                    })
+                }
+            })
 
-        this.state.users.forEach((x)=>{
-           
-            if(x.user === this.state.username && x.password===this.state.password){
+            if(this.state.isAuthenticated){
+                this.showAlert("Logged in Successfully",'success');
                 this.setState({
-                    isAuthenticated:true
-                })
+                    username:'',
+                    password:''
+                });
             }
-        })
-
-        if(this.state.isAuthenticated){
-            alert('Logged in Successfully');
+            else {
+                this.showAlert("You have entered wrong username or password, please check the credentials and try again",'danger');
+            }
         }
         else {
-            alert('User has entered wrong username and pass');
+            this.showAlert("Login Failed!",'danger');
         }
+    }
 
+    showAlert=(msg,varient)=>{
+        this.setState({
+            showAlert: true,
+            alertVarient:varient,
+            alertText:msg
+        });
+
+        setTimeout(() => {
+            this.setState({
+                showAlert: false,
+                alertText:''
+            })
+        }, 2000)
     }
 
     render() {
         return (
             <div>
+                {this.state.showAlert?
+                    <Alert 
+                        variant={this.state.alertVarient} 
+                        className="loginAlert ms-5"
+                    >   
+                       {this.state.alertText}
+                    </Alert>
+                :null}
                 <h4 className="loginTitle mb-4">Login to Your Account</h4>
                <form>
                     <div className="mb-3 form">

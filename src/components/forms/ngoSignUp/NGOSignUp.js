@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../../../css/form.css';
 import { v1 as uuidv1 } from 'uuid';
 import { Link } from "react-router-dom";
-import { OverlayTrigger,Tooltip } from 'react-bootstrap';
+import { OverlayTrigger,Tooltip,Alert } from 'react-bootstrap';
 
 export default class NGOSignUp extends Component {
     constructor(props){
@@ -28,6 +28,9 @@ export default class NGOSignUp extends Component {
             ngoName:'',
             password:'',
             confirmpassword:'',
+            showAlert:false,
+            alertVarient:'',
+            alertText:'',
             isEmailAvailable:false
         }
 
@@ -126,7 +129,7 @@ export default class NGOSignUp extends Component {
         //validate NGO ID
         if(this.state.ngoId===''){
             this.ngoIdRef.current.classList.add('is-invalid');
-            this.ngoIdError.current.innerText="ngoId field can't be empty!";
+            this.ngoIdError.current.innerText="NGO ID field can't be empty!";
             isNgoIdValid=false;
         }
         else if(this.state.ngoId.length<3 || this.state.ngoId.length>15){
@@ -172,7 +175,7 @@ export default class NGOSignUp extends Component {
 
             this.state.ngos.forEach((ngo)=> {
                 if(ngo.email === this.state.email ){
-                    alert("NGO Already registered please login");
+                    this.showAlert("NGO Already registered please login",'danger');
                     isRegistered=true;
                 }
             });
@@ -193,12 +196,12 @@ export default class NGOSignUp extends Component {
                 
                 axios.post('http://localhost:3000/ngos',data)
                 .then(res=>{
-                    alert('Signed Up');
+                    this.showAlert("Signed Up Successfully!",'success');
                 });
             }
         }
         else {
-            alert("Sign Up Failed");
+            this.showAlert("Sign Up Failed",'danger');
         }
 
         //clear input fields 
@@ -218,6 +221,21 @@ export default class NGOSignUp extends Component {
         </Tooltip>
     );
 
+    showAlert=(msg,varient)=>{
+        this.setState({
+            showAlert: true,
+            alertVarient:varient,
+            alertText:msg
+        });
+
+        setTimeout(() => {
+            this.setState({
+                showAlert: false,
+                alertText:''
+            })
+        }, 2000)
+    }
+
     render() {
         return (
             <div className="ngosignup" id="ngoSignUp" >
@@ -227,6 +245,15 @@ export default class NGOSignUp extends Component {
                             <Link to="/" type="button" className="btn btn-outline-dark btn-sm mt-2">Home</Link>
                         </div>
                         <div className="col-6 pt-4" style={{marginLeft:"650px"}}>
+                            
+                            {this.state.showAlert?
+                            <Alert 
+                                variant={this.state.alertVarient}
+                            >   
+                                {this.state.alertText}
+                            </Alert>
+                            :null}
+
                             <h3 className="mt-4 ms-4 mb-3 display-6 "style={{color:"#4d4d4d"}}>Non Governmental Organization [NGO] Sign Up</h3>
 
                             <form>

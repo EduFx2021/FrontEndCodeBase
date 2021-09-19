@@ -4,7 +4,7 @@ import '../../../css/form.css';
 import { v1 as uuidv1 } from 'uuid';
 import { Link } from "react-router-dom";
 import PhoneAuth from '../../PhoneAuth/PhoneAuth';
-import { OverlayTrigger,Tooltip } from 'react-bootstrap';
+import { OverlayTrigger,Tooltip,Alert } from 'react-bootstrap';
 
 
 export default class NormalUserSignUp extends Component {
@@ -20,7 +20,6 @@ export default class NormalUserSignUp extends Component {
         this.confirmPassError= React.createRef();
         this.signUpButtonRef= React.createRef();
         this.emailError= React.createRef();
-        
 
         this.state={
             email:'',
@@ -29,6 +28,9 @@ export default class NormalUserSignUp extends Component {
             confirmpassword:'',
             phone:'',
             isPhoneAuthenticated:false,
+            showAlert:false,
+            alertVarient:'',
+            alertText:'',
             users:[],
             isUserNameAvailable:false,
             isEmailAvailable:false
@@ -214,7 +216,8 @@ export default class NormalUserSignUp extends Component {
 
         if (!this.state.isPhoneAuthenticated){
             isPhoneValid=false;
-            alert("please enter and verify your phone number!!")
+            this.showAlert("Please enter and verify your phone number!",'danger');
+
         }
         else {
             isPhoneValid=true;
@@ -232,14 +235,14 @@ export default class NormalUserSignUp extends Component {
             this.state.users.forEach((user)=> {
                 
                 if(user.email === this.state.email ){
-                    alert("User Already registered please login");
+                    this.showAlert("User Already registered please login",'danger');
                     isRegistered=true;
                 }
             
             });
             
             if(!this.state.isUserNameAvailable){
-                alert("Please check first if the username is available");
+                this.showAlert("Please check first if the username is available",'danger');
                 isRegistered=true;
             }
 
@@ -258,12 +261,12 @@ export default class NormalUserSignUp extends Component {
 
                 axios.post('http://localhost:3000/users',data)
                 .then(res=>{
-                    alert('Signed Up');
+                    this.showAlert("Signed Up Successfully!",'success');
                 });
             }
         }
         else {
-            alert("Sign Up failed");
+            this.showAlert("Sign Up Failed",'danger');
         }
 
         //clear input fields 
@@ -304,6 +307,21 @@ export default class NormalUserSignUp extends Component {
         </Tooltip>
     );
 
+    showAlert=(msg,varient)=>{
+        this.setState({
+            showAlert: true,
+            alertVarient:varient,
+            alertText:msg
+        });
+
+        setTimeout(() => {
+            this.setState({
+                showAlert: false,
+                alertText:''
+            })
+        }, 2000)
+    }
+
     render() {
         return (
             <div className="normalusersignup" id="normalSignUp" >
@@ -313,6 +331,16 @@ export default class NormalUserSignUp extends Component {
                         <Link to="/" type="button" className="btn btn-outline-dark btn-sm mt-2">Home</Link>  
                         </div>
                         <div className="col-6 " style={{marginLeft:"650px"}}>
+                        
+                            {this.state.showAlert?
+                            <Alert 
+                                variant={this.state.alertVarient} 
+                            >   
+                                {this.state.alertText}
+                            </Alert>
+                            :null}
+
+                            
                             <h3 className="mt-3 ms-4 display-5 "style={{color:"#4d4d4d"}}>Individual User Sign Up</h3>
                             
                             <form>
@@ -363,7 +391,9 @@ export default class NormalUserSignUp extends Component {
                                 </div>
                             </form>
                             
-                            <PhoneAuth isPhoneAuthenticated={this.onPhoneAuthentication} onPhoneNumberVerification={this.onPhoneNumberVerification}/>
+                            <PhoneAuth isPhoneAuthenticated={this.onPhoneAuthentication} onPhoneNumberVerification={this.onPhoneNumberVerification}
+                            showPhoneAlerts={this.showAlert}
+                            />
                             
                             
                             <form>    
