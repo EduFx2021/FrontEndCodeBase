@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PhoneAuth from '../PhoneAuth/PhoneAuth';
+import { OverlayTrigger,Tooltip,Alert } from 'react-bootstrap';
 
 export default class ForgotPassword extends Component {
 
@@ -25,9 +26,15 @@ export default class ForgotPassword extends Component {
             newPass:'',
             confirmPass:'',
             isPhoneAuthenticated:false,
-            isEmailRegistered:false
+            isRegistered:false,
+            isEmailRegistered:false,
+            isPhoneRegistered:false,
+            showAlert:false,
+            alertVarient:'',
+            alertText:''
         };
     }
+
 
     componentDidMount=()=>{
         this.emailRef.current.addEventListener("keydown",this.handleInput);
@@ -52,7 +59,34 @@ export default class ForgotPassword extends Component {
         this.setState({
             isPhoneAuthenticated:true
         });
+        this.checkRegisteredUser();
     }
+
+    // This method checks if the email id and phone number entered is registered under the same id
+    checkRegisteredUser = async function(){
+        
+        const response =  await axios.get(`http://localhost:3000/${this.props.forgotPassFor}`);
+
+        this.setState({
+            users: response.data
+        });
+
+        this.state.users.forEach((user)=> {
+            
+            if(user.email === this.state.email && user.phone === this.state.phone){
+                
+                this.setState({
+                    isRegistered:true
+                });
+               
+            }
+            
+        });
+
+        if(this.state.isRegistered === false){
+            alert('No User is Registered with this email and password');
+        }
+    } 
 
     // This method fetches phone number from PhoneAuth.js and updates phone state
     onPhoneNumberVerification = (e,ph) => {
@@ -198,13 +232,34 @@ export default class ForgotPassword extends Component {
             password:'',
             confirmpassword:''
         });
-        
+    }
 
+    showAlert=(msg,varient)=>{
+        this.setState({
+            showAlert: true,
+            alertVarient:varient,
+            alertText:msg
+        });
+
+        setTimeout(() => {
+            this.setState({
+                showAlert: false,
+                alertText:''
+            })
+        }, 2000)
     }
 
     render() {
         return (
             <div className="forgotPassword mb-3">
+                {this.state.showAlert?
+                    <Alert 
+                        variant={this.state.alertVarient}
+                        style={{width:"80%", margin:"auto",marginBottom:"10px"} } 
+                    >   
+                        {this.state.alertText}
+                    </Alert>
+                :null}
                 <h4 className="loginTitle mb-4">Forgot Password</h4>
                  <form>
                     <div className="mb-1 ms-5 mt-2">
@@ -224,10 +279,13 @@ export default class ForgotPassword extends Component {
                     </div>
                 </form>
                 <div className="ms-4">
-                    <PhoneAuth isPhoneAuthenticated={this.onPhoneAuthentication} onPhoneNumberVerification={this.onPhoneNumberVerification}/>
+                    <PhoneAuth 
+                        isPhoneAuthenticated={this.onPhoneAuthentication} onPhoneNumberVerification={this.onPhoneNumberVerification}
+                        showPhoneAlerts={this.showAlert}
+                    />
                 </div>
 
-                {this.state.isPhoneAuthenticated?
+                {this.state.isPhoneAuthenticated && this.state.isRegistered?
                 <div>
                     <div className="mb-2 ms-5"> 
                         <label htmlFor="userPassword " className="form-label">New Password</label>

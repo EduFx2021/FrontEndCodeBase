@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from '../firebase';
 import { getAuth,RecaptchaVerifier,signInWithPhoneNumber } from "firebase/auth";
+import PropTypes from 'prop-types'
 import '../../css/otpInput.css'
 
 export default class PhoneAuth extends Component {
@@ -158,3 +159,7 @@ export default class PhoneAuth extends Component {
         )
     }
 }
+
+PhoneAuth.propTypes = {
+    showPhoneAlerts: PropTypes.func.isRequired
+};
